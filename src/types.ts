@@ -20,8 +20,8 @@ export const ObjectPlaceholder = {};
 export interface DtoListControllerProps<T extends HasId> {
     dtoList: T[];
     entityName: string;
-    updateServerAction?: (entityList: T[]) => Promise<T[]>;
-    deleteServerAction?: (idList: any[]) => Promise<any[]>;
+    updateServerAction?: (entityList: T[]) => Promise<any>;
+    deleteServerAction?: (idList: any[]) => Promise<any>;
     unsavedChangesComponent?: (props: UnsavedChangesProps) => ReactNode
 }
 

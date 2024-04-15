@@ -1,4 +1,4 @@
-export function getEntityNamespaceContextKey<T>(
+export function getEntityNamespaceContextKey(
   entityType: string,
   id: string | number
 ) {

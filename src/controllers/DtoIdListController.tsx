@@ -1,14 +1,16 @@
 'use client';
 
-import {ReactNode, useMemo} from "react";
+import React, {useMemo} from "react";
 import {useSelectiveContextGlobalController, useSelectiveContextListenerReadAll} from "selective-context";
-import {EmptyArray} from "./dto-controller";
 import {SelectiveContextGlobal} from "selective-context/dist/creators/selectiveContextCreatorGlobal";
-import {getEntityNamespaceContextKey} from "./get-entity-namespace-context-key";
-import {HasId} from "./dto-controller-array";
-import {useSyncSelectiveStateToProps} from "./use-sync-selective-state-to-props";
+import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";
+import {useSyncSelectiveStateToProps} from "../hooks/useSyncSelectiveStateToProps";
+import {DtoListControllerProps, EmptyArray} from "../types";
+import {getChangesContextKey} from "../functions/getChangesContextKey";
+import {getDeletedContextKey} from "../functions/getDeletedContextKey";
+import {getIdListContextKey} from "../functions/getIdListContextKey";
 
-export default function DtoIdListController({
+export function DtoIdListController({
   entityName,
   dtoList,
   updateServerAction,
@@ -76,40 +78,14 @@ export default function DtoIdListController({
     getIdListContextKey(entityName)
   );
   return (
-    <UnsavedChanges
+      UnsavedChanges &&
+  <UnsavedChanges
       unsavedFlag={changedDtos.length > 0 || deletedDtos.length > 0}
       handleCommit={handleCommit}
-    />
+  />
+
   );
-}
-
-export interface DtoListControllerProps<T extends HasId> {
-  dtoList: T[];
-  entityName: string;
-  updateServerAction?: (entityList: T[]) => Promise<T[]>;
-  deleteServerAction?: (idList: any[]) => Promise<any[]>;
-  unsavedChangesComponent?: (props: UnsavedChangesProps) => ReactNode
-}
-
-export interface UnsavedChangesProps {
-  unsavedFlag: boolean,
-  handleCommit: () => void
-}
-
-export function getNameSpacedKey(entityName: string, keyType: string) {
-  return `${entityName}:${keyType}`;
-}
-
-export function getIdListContextKey(entityName: string) {
-  return getNameSpacedKey(entityName, 'idList');
 }
 
 const listenerKey = 'listController';
 
-export function getChangesContextKey(entityName: string) {
-  return getNameSpacedKey(entityName, 'changes');
-}
-
-export function getDeletedContextKey(entityName: string) {
-  return getNameSpacedKey(entityName, 'deleted');
-}

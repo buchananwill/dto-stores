@@ -1,4 +1,4 @@
-import {Dispatch, FC, ReactNode, SetStateAction} from "react";
+import React, {Dispatch, FC, PropsWithChildren, SetStateAction} from "react";
 
 export interface HasNumberIdDto {
     id: number
@@ -22,7 +22,7 @@ export interface DtoListControllerProps<T extends HasId> {
     entityName: string;
     updateServerAction?: (entityList: T[]) => Promise<any>;
     deleteServerAction?: (idList: any[]) => Promise<any>;
-    unsavedChangesComponent?: (props: UnsavedChangesProps) => ReactNode
+    unsavedChangesComponent?: (props: UnsavedChangesProps) => React.ReactNode
 }
 
 export interface UnsavedChangesProps {
@@ -30,7 +30,7 @@ export interface UnsavedChangesProps {
     handleCommit: () => void
 }
 
-export interface DtoUiComponentProps<T extends HasId> {
+export interface DtoUiComponentProps<T extends HasId> extends PropsWithChildren {
     entity: T;
     entityClass: string;
     dispatchWithoutControl?: Dispatch<SetStateAction<T>>;
@@ -39,3 +39,8 @@ export interface DtoUiComponentProps<T extends HasId> {
 }
 
 export type DtoUiComponent<T extends HasId> = FC<DtoUiComponentProps<T>>;
+
+export interface DtoUiArrayGeneratorProps<T extends HasId> {
+    entityName: string;
+    eachAs?: DtoUiComponent<T>;
+}

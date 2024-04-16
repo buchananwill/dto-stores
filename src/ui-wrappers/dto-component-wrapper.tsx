@@ -36,8 +36,8 @@ export function DtoComponentWrapper<T extends HasId>({
   }, [deletedEntities, id]);
 
   return (
-    <>
-      {UiComponent && (
+
+      UiComponent && (
         <UiComponent
           entity={currentState}
           entityClass={entityClass}
@@ -45,8 +45,8 @@ export function DtoComponentWrapper<T extends HasId>({
           deleted={deleted}
           dispatchDeletion={dispatchDeletion}
         />
-      )}
-    </>
+      )
+
   );
 }
 

@@ -8,7 +8,8 @@ export function DtoControllerArray<T extends HasId>({
   dtoList,
   entityName,
   updateServerAction,
-  deleteServerAction
+  deleteServerAction,
+    unsavedChangesComponent
 }: DtoListControllerProps<T>) {
   return (
     <>
@@ -17,6 +18,7 @@ export function DtoControllerArray<T extends HasId>({
         entityName={entityName}
         updateServerAction={updateServerAction}
         deleteServerAction={deleteServerAction}
+        unsavedChangesComponent={unsavedChangesComponent}
       />
       {dtoList.map((dto) => (
         <DtoController

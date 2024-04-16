@@ -1,3 +1,4 @@
+'use client'
 import {HasId} from "../types";
 import {useSelectiveContextGlobalController} from "selective-context";
 import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";

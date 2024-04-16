@@ -1,6 +1,6 @@
 {
   "name": "dto-stores",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Utility components for reducing boilerplate when managing the lifecycle of database objects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "selective-context": "^1.0.4"
+    "selective-context": "^1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

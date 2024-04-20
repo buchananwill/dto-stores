@@ -15,12 +15,12 @@
   "author": "Will Buchanan",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^18.2.0",
-    "@types/react": "^18.2.78"
+    "@types/react": "^18.2.78",
+    "react": "^18.2.0"
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "selective-context": "^1.1"
+    "selective-context": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

@@ -1,6 +1,6 @@
 {
   "name": "dto-stores",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Utility components for reducing boilerplate when managing the lifecycle of database objects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

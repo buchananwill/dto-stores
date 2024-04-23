@@ -7,7 +7,6 @@ import {
 } from "selective-context";
 import {useEffect, useMemo} from "react";
 import {EmptyArray, ObjectPlaceholder} from "../types";
-import {isEqual} from "lodash";
 
 export interface DtoGroupMapControllerProps {
     entityClass: string
@@ -37,16 +36,14 @@ export function DtoGroupMapController({entityClass}:DtoGroupMapControllerProps) 
             initialValue: ObjectPlaceholder
         });
 
-    console.log('local: ', entityMap)
-
-    let {currentState: contextAvailableMap, dispatch} = useSelectiveContextGlobalController({contextKey: `${entityClass}:stringMap`, listenerKey:'mapController', initialValue:entityMap});
-
-    console.log('Subscribable: ', contextAvailableMap)
+    let {dispatch} = useSelectiveContextGlobalController({contextKey: `${entityClass}:stringMap`, listenerKey:'mapController', initialValue:entityMap});
 
     useEffect(() => {
-        if (!isEqual(entityMap, contextAvailableMap)) {
-            dispatch(contextAvailableMap)
-        }
-    }, [entityMap, contextAvailableMap])
+
+            dispatch(entityMap)
+
+    }, [entityMap])
+
+    return null
 
 }

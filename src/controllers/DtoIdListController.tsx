@@ -21,7 +21,7 @@ export function DtoIdListController({
     return dtoList.map((dto) => dto.id);
   }, [dtoList]);
 
-  const { currentState, dispatchUpdate } = useSelectiveContextGlobalController({
+  const { currentState, dispatch } = useSelectiveContextGlobalController({
     contextKey: getIdListContextKey(entityName),
     listenerKey: listenerKey,
     initialValue: idListArray
@@ -73,7 +73,7 @@ export function DtoIdListController({
 
   useSyncSelectiveStateToProps(
     idListArray,
-    dispatchUpdate,
+    dispatch,
     currentState,
     getIdListContextKey(entityName)
   );

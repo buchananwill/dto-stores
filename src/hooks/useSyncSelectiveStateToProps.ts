@@ -1,10 +1,9 @@
-import { Dispatch, useEffect, useRef } from 'react';
-import {UpdateAction} from "selective-context/dist/types";
+import {Dispatch, SetStateAction, useEffect, useRef} from 'react';
 
 
 export function useSyncSelectiveStateToProps<T>(
   propData: T,
-  dispatch: Dispatch<UpdateAction<T>>,
+  dispatch: Dispatch<SetStateAction<T>>,
   stateData: T,
   contextKey: string
 ) {
@@ -12,7 +11,7 @@ export function useSyncSelectiveStateToProps<T>(
 
   useEffect(() => {
     if (initialMapRef.current !== propData && (dispatch !== undefined)) {
-      dispatch({ contextKey, update: propData });
+      dispatch(propData);
       initialMapRef.current = propData;
     }
   }, [stateData, propData, contextKey, initialMapRef, dispatch]);

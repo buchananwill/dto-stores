@@ -9,12 +9,14 @@ import {DtoListControllerProps, EmptyArray} from "../types";
 import {getChangesContextKey} from "../functions/getChangesContextKey";
 import {getDeletedContextKey} from "../functions/getDeletedContextKey";
 import {getIdListContextKey} from "../functions/getIdListContextKey";
+import {getAddedContextKey} from "../functions/getAddedContextKey";
 
 export function DtoIdListController({
   entityName,
   dtoList,
   updateServerAction,
   deleteServerAction,
+    postServerAction,
     unsavedChangesComponent: UnsavedChanges
 }: DtoListControllerProps<any>) {
   const idListArray = useMemo(() => {
@@ -43,6 +45,14 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
+  const { currentState: transientDtoIdList } = useSelectiveContextGlobalController<
+    (string | number)[]
+  >({
+    contextKey: getAddedContextKey(entityName),
+    listenerKey: `${entityName}:listenerKey`,
+    initialValue: EmptyArray
+  });
+
   const selectiveContextReadAll = useSelectiveContextListenerReadAll(
     SelectiveContextGlobal
   );
@@ -51,23 +61,36 @@ export function DtoIdListController({
 
   async function handleCommit() {
     if ((updateServerAction) === undefined) {
-      console.error('No server action defined');
-      return;
+      console.error('No server update action defined');
+    } else {
+      const set = new Set<string | number>();
+      changedDtos.forEach((key) => set.add(key));
+      const keyArray: (string | number)[] = [];
+      set.forEach((element) => keyArray.push(element));
+      const updatedEntities = keyArray
+          .map((id) =>
+              selectiveContextReadAll(getEntityNamespaceContextKey(entityName, id))
+          )
+          .filter(item => item !== undefined);
+      // const entityList = Object.values(currentModels as StringMap<T>);
+      console.log(updatedEntities);
+      updateServerAction(updatedEntities);
     }
-    const set = new Set<string | number>();
 
-    changedDtos.forEach((key) => set.add(key));
-    const keyArray: (string | number)[] = [];
-    set.forEach((element) => keyArray.push(element));
-    const updatedEntities = keyArray
-      .map((id) =>
-        selectiveContextReadAll(getEntityNamespaceContextKey(entityName, id))
-      )
-      .filter(item => item !== undefined);
-    // const entityList = Object.values(currentModels as StringMap<T>);
-    console.log(updatedEntities);
-    updateServerAction(updatedEntities);
-    if ((deleteServerAction) !== undefined) deleteServerAction(deletedDtos);
+    if ((deleteServerAction) === undefined) {
+      console.error('No server delete action defined');
+    } else {
+      deleteServerAction(deletedDtos);
+    }
+
+    if (postServerAction === undefined) {
+      console.error('No server post action defined')
+    } else {
+      const transientDtoList = transientDtoIdList .map((id) =>
+          selectiveContextReadAll(getEntityNamespaceContextKey(entityName, id))
+      ).filter(item => item !== undefined);
+      postServerAction(transientDtoList)
+    }
 
   }
 

@@ -22,6 +22,7 @@ export interface DtoListControllerProps<T extends HasId> {
     entityName: string;
     updateServerAction?: (entityList: T[]) => Promise<any>;
     deleteServerAction?: (idList: any[]) => Promise<any>;
+    postServerAction?: (entityList: T[]) => Promise<any>;
     unsavedChangesComponent?: (props: UnsavedChangesProps) => React.ReactNode
 }
 

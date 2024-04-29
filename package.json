@@ -15,9 +15,9 @@
   "author": "Will Buchanan",
   "license": "MIT",
   "dependencies": {
-    "selective-context": "file:D:\\Coding\\selective-context"
   },
   "peerDependencies": {
+    "selective-context": "^1.5.0",
     "@types/react": "^18.2.78",
     "react": "^18.2.0",
     "lodash": "^4.17.21"

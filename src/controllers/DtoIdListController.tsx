@@ -103,7 +103,7 @@ export function DtoIdListController({
   return (
       UnsavedChanges &&
   <UnsavedChanges
-      unsavedFlag={changedDtos.length > 0 || deletedDtos.length > 0}
+      unsavedFlag={changedDtos.length > 0 || deletedDtos.length > 0 || transientDtoIdList.length > 0}
       handleCommit={handleCommit}
   />
 

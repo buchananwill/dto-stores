@@ -37,7 +37,7 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
-  const { currentState: deletedDtos } = useSelectiveContextGlobalController<
+  const { currentState: deletedDtos, dispatch: dispatchDeletionList } = useSelectiveContextGlobalController<
     (string | number)[]
   >({
     contextKey: getDeletedContextKey(entityName),
@@ -81,13 +81,17 @@ export function DtoIdListController({
     if ((deleteServerAction) === undefined) {
       console.error('No server delete action defined');
     } else {
-      deleteServerAction(deletedDtos);
+      deletedDtos.filter(id => !transientDtoIdList.includes(id))
+      deleteServerAction(deletedDtos)
+          .then(() => dispatchDeletionList([]));
     }
 
     if (postServerAction === undefined) {
       console.error('No server post action defined')
     } else {
-      const transientDtoList = transientDtoIdList .map((id) =>
+      const transientDtoList = transientDtoIdList
+          .filter(id => !deletedDtos.includes(id))
+          .map((id) =>
           selectiveContextReadAll(getEntityNamespaceContextKey(entityName, id))
       ).filter(item => item !== undefined);
       postServerAction(transientDtoList)

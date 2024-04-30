@@ -29,7 +29,7 @@ export function DtoIdListController({
     initialValue: idListArray
   });
 
-  const { currentState: changedDtos } = useSelectiveContextGlobalController<
+  const { currentState: changedDtos, dispatch: dispatchChangesList } = useSelectiveContextGlobalController<
     (string | number)[]
   >({
     contextKey: getChangesContextKey(entityName),
@@ -45,7 +45,7 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
-  const { currentState: transientDtoIdList } = useSelectiveContextGlobalController<
+  const { currentState: transientDtoIdList, dispatch: dispatchTransientList } = useSelectiveContextGlobalController<
     (string | number)[]
   >({
     contextKey: getAddedContextKey(entityName),
@@ -74,7 +74,8 @@ export function DtoIdListController({
           .filter(item => item !== undefined);
       // const entityList = Object.values(currentModels as StringMap<T>);
       console.log(updatedEntities);
-      updateServerAction(updatedEntities);
+      updateServerAction(updatedEntities)
+          .then(() => dispatchChangesList([]));
     }
 
     if ((deleteServerAction) === undefined) {
@@ -90,6 +91,7 @@ export function DtoIdListController({
           selectiveContextReadAll(getEntityNamespaceContextKey(entityName, id))
       ).filter(item => item !== undefined);
       postServerAction(transientDtoList)
+          .then(() => dispatchTransientList([]))
     }
 
   }

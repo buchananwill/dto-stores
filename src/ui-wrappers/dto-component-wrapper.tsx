@@ -1,11 +1,10 @@
 'use client';
 
 
-import {DtoUiComponent, EmptyArray, HasId} from "../types";
-import React, {useMemo} from "react";
+import {DtoUiComponent, HasId} from "../types";
+import React from "react";
 import {useDtoStoreDispatch} from "../hooks/useDtoStoreDispatch";
-import {useSelectiveContextGlobalDispatch} from "selective-context";
-import {getDeletedContextKey} from "../functions/getDeletedContextKey";
+import {useDtoStoreDelete} from "../hooks/useDtoStoreDelete";
 
 export function DtoComponentWrapper<T extends HasId>({
   entityClass,
@@ -21,19 +20,7 @@ export function DtoComponentWrapper<T extends HasId>({
     entityClass,
     UiComponent?.name || 'component'
   );
-
-  const {
-    currentState: deletedEntities,
-    dispatchWithoutControl: dispatchDeletion
-  } = useSelectiveContextGlobalDispatch<(string | number)[]>({
-    contextKey: getDeletedContextKey(entityClass),
-    initialValue: EmptyArray,
-    listenerKey: `${id}:uiWrapper`
-  });
-
-  const deleted = useMemo(() => {
-    return deletedEntities.includes(id);
-  }, [deletedEntities, id]);
+  const {dispatchDeletion, deleted} = useDtoStoreDelete(entityClass, id);
 
   return (
 

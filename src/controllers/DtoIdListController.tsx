@@ -1,8 +1,7 @@
 'use client';
 
 import React, {useMemo} from "react";
-import {useSelectiveContextGlobalController, useSelectiveContextListenerReadAll} from "selective-context";
-import {SelectiveContextGlobal} from "selective-context/dist/creators/selectiveContextCreatorGlobal";
+import {useGlobalReadAny, useSelectiveContextGlobalController} from "selective-context";
 import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";
 import {useSyncSelectiveStateToProps} from "../hooks/useSyncSelectiveStateToProps";
 import {DtoListControllerProps, EmptyArray} from "../types";
@@ -53,9 +52,7 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
-  const selectiveContextReadAll = useSelectiveContextListenerReadAll(
-    SelectiveContextGlobal
-  );
+  const selectiveContextReadAll = useGlobalReadAny();
 
 
 

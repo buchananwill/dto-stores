@@ -1,12 +1,9 @@
 'use client'
 
-import {
-    useSelectiveContextGlobalController,
-    useSelectiveContextGlobalListener,
-    useSelectiveContextListenerGroupGlobal
-} from "selective-context";
+
 import {useEffect, useMemo} from "react";
-import {EmptyArray, ObjectPlaceholder} from "../types";
+import {EmptyArray} from "../types";
+import {useGlobalController, useGlobalListener, useGlobalListenerGroup} from "selective-context";
 
 export interface DtoGroupMapControllerProps {
     entityClass: string
@@ -15,7 +12,7 @@ export interface DtoGroupMapControllerProps {
 const initialMap = new Map()
 
 export function DtoGroupMapController({entityClass}:DtoGroupMapControllerProps) {
-    const { currentState: idList } = useSelectiveContextGlobalListener<
+    const { currentState: idList } = useGlobalListener<
         (number|string)[]
     >({
         contextKey: `${entityClass}:idList`,
@@ -32,13 +29,13 @@ export function DtoGroupMapController({entityClass}:DtoGroupMapControllerProps) 
     );
 
     const { currentState: entityMap } =
-        useSelectiveContextListenerGroupGlobal({
+        useGlobalListenerGroup({
             contextKeys,
             listenerKey: `mapController`,
             initialValue: initialMap
         });
 
-    let {dispatch} = useSelectiveContextGlobalController({contextKey: `${entityClass}:stringMap`, listenerKey:'mapController', initialValue:entityMap});
+    let {dispatch} = useGlobalController({contextKey: `${entityClass}:stringMap`, listenerKey:'mapController', initialValue:entityMap});
 
     useEffect(() => {
 

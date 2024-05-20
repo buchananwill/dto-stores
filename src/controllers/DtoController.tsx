@@ -2,10 +2,11 @@
 
 import {useEffect, useRef} from 'react';
 import {isEqual} from 'lodash';
-import {useSelectiveContextGlobalDispatch} from "selective-context";
+
 import {DtoControllerProps, EmptyArray, HasNumberIdDto, HasUuidDto} from "../types";
 import {useDtoStoreController} from "../hooks/useDtoStoreController";
 import {getChangesContextKey} from "../functions/getChangesContextKey";
+import {useGlobalDispatch} from "selective-context";
 
 export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
   dto,
@@ -14,18 +15,17 @@ export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
   const { currentState } = useDtoStoreController(dto, entityName);
   const initialDtoRef = useRef<T>(dto);
 
-  const { dispatchWithoutControl } = useSelectiveContextGlobalDispatch<
+  const { dispatchWithoutListen } = useGlobalDispatch<
     (string | number)[]
-  >({
-    contextKey: getChangesContextKey(entityName),
-    listenerKey: `controller:${dto.id}`,
-    initialValue: EmptyArray
-  });
+  >(
+     getChangesContextKey(entityName),
+
+  );
 
   useEffect(() => {
     const entityChanged = !isEqual(initialDtoRef.current, currentState);
 
-    dispatchWithoutControl((state) => {
+    dispatchWithoutListen((state) => {
       const previouslyChanged = state.includes(dto.id);
       if (previouslyChanged && !entityChanged) {
         return state.filter((id) => id != dto.id);
@@ -33,7 +33,7 @@ export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
         return [...state, dto.id];
       } else return state;
     });
-  }, [currentState, dispatchWithoutControl, dto.id]);
+  }, [currentState, dispatchWithoutListen, dto.id]);
 
   return null;
 }

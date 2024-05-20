@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useMemo} from "react";
-import {useGlobalReadAny, useSelectiveContextGlobalController} from "selective-context";
+import {useGlobalController, useGlobalReadAny} from "selective-context";
 import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";
 import {useSyncSelectiveStateToProps} from "../hooks/useSyncSelectiveStateToProps";
 import {DtoListControllerProps, EmptyArray} from "../types";
@@ -22,13 +22,13 @@ export function DtoIdListController({
     return dtoList.map((dto) => dto.id);
   }, [dtoList]);
 
-  const { currentState, dispatch } = useSelectiveContextGlobalController({
+  const { currentState, dispatch } = useGlobalController({
     contextKey: getIdListContextKey(entityName),
     listenerKey: listenerKey,
     initialValue: idListArray
   });
 
-  const { currentState: changedDtos, dispatch: dispatchChangesList } = useSelectiveContextGlobalController<
+  const { currentState: changedDtos, dispatch: dispatchChangesList } = useGlobalController<
     (string | number)[]
   >({
     contextKey: getChangesContextKey(entityName),
@@ -36,7 +36,7 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
-  const { currentState: deletedDtos, dispatch: dispatchDeletionList } = useSelectiveContextGlobalController<
+  const { currentState: deletedDtos, dispatch: dispatchDeletionList } = useGlobalController<
     (string | number)[]
   >({
     contextKey: getDeletedContextKey(entityName),
@@ -44,7 +44,7 @@ export function DtoIdListController({
     initialValue: EmptyArray
   });
 
-  const { currentState: transientDtoIdList, dispatch: dispatchTransientList } = useSelectiveContextGlobalController<
+  const { currentState: transientDtoIdList, dispatch: dispatchTransientList } = useGlobalController<
     (string | number)[]
   >({
     contextKey: getAddedContextKey(entityName),

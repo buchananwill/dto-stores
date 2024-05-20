@@ -1,14 +1,15 @@
 'use client'
 import {HasId, ObjectPlaceholder} from "../types";
-import {useSelectiveContextGlobalDispatch} from "selective-context";
+
 import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";
+import {useGlobalDispatchAndListener} from "selective-context";
 
 export function useDtoStoreDispatch<T extends HasId>(
     id: number | string,
     entityType: string,
     listenerKey: string
 ) {
-    return useSelectiveContextGlobalDispatch<T>({
+    return useGlobalDispatchAndListener<T>({
         contextKey: getEntityNamespaceContextKey(entityType, id),
         initialValue: ObjectPlaceholder as T,
         listenerKey: listenerKey

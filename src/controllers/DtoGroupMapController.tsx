@@ -12,6 +12,8 @@ export interface DtoGroupMapControllerProps {
     entityClass: string
 }
 
+const initialMap = new Map()
+
 export function DtoGroupMapController({entityClass}:DtoGroupMapControllerProps) {
     const { currentState: idList } = useSelectiveContextGlobalListener<
         (number|string)[]
@@ -33,7 +35,7 @@ export function DtoGroupMapController({entityClass}:DtoGroupMapControllerProps) 
         useSelectiveContextListenerGroupGlobal({
             contextKeys,
             listenerKey: `mapController`,
-            initialValue: ObjectPlaceholder
+            initialValue: initialMap
         });
 
     let {dispatch} = useSelectiveContextGlobalController({contextKey: `${entityClass}:stringMap`, listenerKey:'mapController', initialValue:entityMap});

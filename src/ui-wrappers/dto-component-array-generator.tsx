@@ -1,17 +1,18 @@
 'use client';
 
-import {useSelectiveContextGlobalListener} from "selective-context"
+
 import {DtoUiArrayGeneratorProps, EmptyArray, HasId} from "../types";
 import {getIdListContextKey} from "../functions/getIdListContextKey";
 import {DtoComponentWrapper} from "./dto-component-wrapper";
 import React from "react";
+import {useGlobalListener} from "selective-context";
 
 export function DtoComponentArrayGenerator<T extends HasId>({
   entityName,
   eachAs: WrappedComponent
 } : DtoUiArrayGeneratorProps<T>) {
   const contextKey = getIdListContextKey(entityName);
-  const { currentState } = useSelectiveContextGlobalListener<number[]>({
+  const { currentState } = useGlobalListener<number[]>({
     contextKey,
     listenerKey: 'dtoComponentArrayGenerator',
     initialValue: EmptyArray
@@ -19,7 +20,7 @@ export function DtoComponentArrayGenerator<T extends HasId>({
 
   return (
       <>
-        {currentState.map((id) => (
+        {currentState.map((id: string | number) => (
             <DtoComponentWrapper<T>
                 entityClass={entityName}
                 id={id}

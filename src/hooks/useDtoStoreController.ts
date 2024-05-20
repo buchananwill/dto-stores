@@ -1,13 +1,14 @@
 'use client'
 import {HasId} from "../types";
-import {useSelectiveContextGlobalController} from "selective-context";
+
 import {getEntityNamespaceContextKey} from "../functions/getEntityNamespaceContextKey";
+import {useGlobalController} from "selective-context";
 
 export function useDtoStoreController<T extends HasId>(
     dto: T,
     entityType: string
 ) {
-    return useSelectiveContextGlobalController<T>({
+    return useGlobalController<T>({
         contextKey: getEntityNamespaceContextKey(entityType, dto.id),
         initialValue: dto,
         listenerKey: 'controller'

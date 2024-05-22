@@ -1,7 +1,7 @@
 import { CommitServerAction, HasId } from "../types";
 import { SelectiveContextReadAll } from "selective-context/dist/types";
 import React, { useCallback } from "react";
-import { getEntityNamespaceContextKey } from "../functions/getEntityNamespaceContextKey";
+import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
 import { isNotUndefined } from "../functions/utils";
 
 export function useCommitChangesCallback<T extends HasId>(

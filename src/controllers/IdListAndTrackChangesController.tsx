@@ -1,57 +1,51 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useCallback } from "react";
 import { useGlobalController, useGlobalReadAny } from "selective-context";
 import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
-import { useSyncSelectiveStateToProps } from "../hooks/useSyncSelectiveStateToProps";
-import { DtoListControllerProps, EmptyArray } from "../types";
+import { EmptyArray, IdListControllerProps } from "../types";
 import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
 import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
 import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
 import { getAddedContextKey } from "../functions/name-space-keys/getAddedContextKey";
 
-export function DtoIdListController({
+export function IdListAndTrackChangesController({
   entityClass,
-  dtoList,
+  idList,
   updateServerAction,
   deleteServerAction,
   postServerAction,
-  unsavedChangesComponent: UnsavedChanges,
-}: DtoListControllerProps<any>) {
-  const idListArray = useMemo(() => {
-    return dtoList.map((dto) => dto.id);
-  }, [dtoList]);
-
-  const { currentState, dispatch } = useGlobalController({
+}: IdListControllerProps<any>) {
+  useGlobalController({
     contextKey: getIdListContextKey(entityClass),
     listenerKey: listenerKey,
-    initialValue: idListArray,
+    initialValue: idList,
   });
 
   const { currentState: changedDtos, dispatch: dispatchChangesList } =
     useGlobalController<(string | number)[]>({
       contextKey: getChangesContextKey(entityClass),
-      listenerKey: `${entityClass}:listenerKey`,
+      listenerKey: `${entityClass}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
   const { currentState: deletedDtos, dispatch: dispatchDeletionList } =
     useGlobalController<(string | number)[]>({
       contextKey: getDeletedContextKey(entityClass),
-      listenerKey: `${entityClass}:listenerKey`,
+      listenerKey: `${entityClass}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
   const { currentState: transientDtoIdList, dispatch: dispatchTransientList } =
     useGlobalController<(string | number)[]>({
       contextKey: getAddedContextKey(entityClass),
-      listenerKey: `${entityClass}:listenerKey`,
+      listenerKey: `${entityClass}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
   const selectiveContextReadAll = useGlobalReadAny();
 
-  async function handleCommit() {
+  const handleCommit = useCallback(async () => {
     if (updateServerAction === undefined) {
       console.error("No server update action defined");
     } else {
@@ -91,26 +85,21 @@ export function DtoIdListController({
         .filter((item) => item !== undefined);
       postServerAction(transientDtoList).then(() => dispatchTransientList([]));
     }
-  }
+  }, [
+    updateServerAction,
+    transientDtoIdList,
+    deletedDtos,
+    changedDtos,
+    selectiveContextReadAll,
+    entityClass,
+    dispatchChangesList,
+    deleteServerAction,
+    dispatchDeletionList,
+    postServerAction,
+    dispatchTransientList,
+  ]);
 
-  useSyncSelectiveStateToProps(
-    idListArray,
-    dispatch,
-    currentState,
-    getIdListContextKey(entityClass),
-  );
-  return (
-    UnsavedChanges && (
-      <UnsavedChanges
-        unsavedFlag={
-          changedDtos.length > 0 ||
-          deletedDtos.length > 0 ||
-          transientDtoIdList.length > 0
-        }
-        handleCommit={handleCommit}
-      />
-    )
-  );
+  return null;
 }
 
-const listenerKey = "listController";
+const listenerKey = "controller";

@@ -25,15 +25,15 @@ export const ObjectPlaceholder = {};
 
 export interface DtoListControllerProps<T extends HasId> {
   dtoList: T[];
-  entityName: string;
+  entityClass: string;
   updateServerAction?: CommitServerAction<T>;
   deleteServerAction?: CommitServerAction<any>;
   postServerAction?: CommitServerAction<T>;
   unsavedChangesComponent?: (props: UnsavedChangesProps) => React.ReactNode;
 }
-export interface IdListControllerProps<T extends HasId> {
-  idList: string | number[];
-  entityName: string;
+export interface IdListControllerProps<T extends HasIdClass<U>, U> {
+  idList: U[];
+  entityClass: string;
   updateServerAction?: CommitServerAction<T>;
   deleteServerAction?: CommitServerAction<any>;
   postServerAction?: CommitServerAction<T>;
@@ -57,8 +57,10 @@ export interface DtoUiComponentProps<T extends HasId>
 
 export type DtoUiComponent<T extends HasId> = FC<DtoUiComponentProps<T>>;
 
+export type DtoUiComponentLazy<T extends HasId> = FC<DtoUiComponentProps<T>>;
+
 export interface DtoUiArrayGeneratorProps<T extends HasId> {
-  entityName: string;
+  entityClass: string;
   eachAs?: DtoUiComponent<T>;
 }
 
@@ -69,4 +71,8 @@ export type ChangesCallbackMap = Map<
 
 export interface CommitServerAction<T> {
   (commitList: T[]): Promise<any>;
+}
+
+export interface HasIdClass<U> {
+  id: U;
 }

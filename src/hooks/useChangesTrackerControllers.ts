@@ -1,8 +1,8 @@
 import { useGlobalController, useGlobalDispatch } from "selective-context";
-import { getChangesContextKey } from "../functions/getChangesContextKey";
+import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
 import { ChangesCallbackMap, EmptyArray } from "../types";
-import { getDeletedContextKey } from "../functions/getDeletedContextKey";
-import { getAddedContextKey } from "../functions/getAddedContextKey";
+import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
+import { getAddedContextKey } from "../functions/name-space-keys/getAddedContextKey";
 
 export function useChangesTrackerControllers(entityName: string) {
   const { currentState: changedDtos, dispatch: dispatchChangesList } =

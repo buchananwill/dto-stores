@@ -1,7 +1,7 @@
 "use client";
 import { HasId, ObjectPlaceholder } from "../types";
 
-import { getEntityNamespaceContextKey } from "../functions/getEntityNamespaceContextKey";
+import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalDispatchAndListener } from "selective-context";
 
 export function useDtoStoreDispatch<T>(

@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react";
 import { useGlobalReadAny } from "selective-context";
 import { IdListControllerProps } from "../types";
-import { useCommitChangesCallback } from "./useCommitChangesCallback";
-import { useChangesTrackerControllers } from "./useChangesTrackerControllers";
+import { useCommitChangesCallback } from "../hooks/useCommitChangesCallback";
+import { useChangesTrackerControllers } from "../hooks/useChangesTrackerControllers";
 
 export function TrackChangesController({
-  entityName,
+  entityClass,
   updateServerAction,
   deleteServerAction,
   postServerAction,
@@ -20,7 +20,7 @@ export function TrackChangesController({
     transientDtoIdList,
     dispatchTransientList,
     dispatchWithoutListen,
-  } = useChangesTrackerControllers(entityName);
+  } = useChangesTrackerControllers(entityClass);
 
   const selectiveContextReadAll = useGlobalReadAny();
 
@@ -29,7 +29,7 @@ export function TrackChangesController({
     deletedDtos,
     changedDtos,
     selectiveContextReadAll,
-    entityName,
+    entityClass,
     dispatchChangesList,
     dispatchDeletionList,
     dispatchTransientList,
@@ -49,14 +49,14 @@ export function TrackChangesController({
     if (hasChanges && !hasChangesRef.current) {
       dispatchWithoutListen((callbackMap) => {
         const updatedMap = new Map([...callbackMap.entries()]);
-        updatedMap.set(entityName, apiCallbackRef);
+        updatedMap.set(entityClass, apiCallbackRef);
         return updatedMap;
       });
       hasChangesRef.current = hasChanges;
     } else if (!hasChanges && hasChangesRef.current) {
       dispatchWithoutListen((callbackMap) => {
         const updatedMap = new Map([...callbackMap.entries()]);
-        updatedMap.delete(entityName);
+        updatedMap.delete(entityClass);
         return updatedMap;
       });
       hasChangesRef.current = hasChanges;

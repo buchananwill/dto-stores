@@ -1,25 +1,27 @@
-'use client';
+"use client";
 
-import {useEffect, useRef} from 'react';
-import {isEqual} from 'lodash';
+import { useEffect, useRef } from "react";
+import { isEqual } from "lodash";
 
-import {DtoControllerProps, EmptyArray, HasNumberIdDto, HasUuidDto} from "../types";
-import {useDtoStoreController} from "../hooks/useDtoStoreController";
-import {getChangesContextKey} from "../functions/getChangesContextKey";
-import {useGlobalDispatch} from "selective-context";
+import {
+  DtoControllerProps,
+  EmptyArray,
+  HasNumberIdDto,
+  HasUuidDto,
+} from "../types";
+import { useDtoStoreController } from "../hooks/useDtoStoreController";
+import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
+import { useGlobalDispatch } from "selective-context";
 
 export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
   dto,
-  entityName
+  entityName,
 }: DtoControllerProps<T>) {
   const { currentState } = useDtoStoreController(dto, entityName);
   const initialDtoRef = useRef<T>(dto);
 
-  const { dispatchWithoutListen } = useGlobalDispatch<
-    (string | number)[]
-  >(
-     getChangesContextKey(entityName),
-
+  const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
+    getChangesContextKey(entityName),
   );
 
   useEffect(() => {

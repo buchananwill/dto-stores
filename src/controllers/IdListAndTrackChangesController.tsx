@@ -15,7 +15,7 @@ export function IdListAndTrackChangesController({
   updateServerAction,
   deleteServerAction,
   postServerAction,
-}: IdListControllerProps<any>) {
+}: IdListControllerProps<any, any>) {
   useGlobalController({
     contextKey: getIdListContextKey(entityClass),
     listenerKey: listenerKey,

@@ -11,7 +11,7 @@ export function TrackChangesController({
   updateServerAction,
   deleteServerAction,
   postServerAction,
-}: IdListControllerProps<any>) {
+}: IdListControllerProps<any, any>) {
   const {
     changedDtos,
     dispatchChangesList,

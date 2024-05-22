@@ -5,7 +5,10 @@ import { IdListControllerProps } from "../types";
 import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
 import React from "react";
 
-function idListController({ entityClass, idList }: IdListControllerProps<any>) {
+function idListController({
+  entityClass,
+  idList,
+}: IdListControllerProps<any, any>) {
   useGlobalController({
     contextKey: getIdListContextKey(entityClass),
     listenerKey: listenerKey,

@@ -13,7 +13,7 @@ function dtoControllerArray<T extends HasId>({
         <DtoController
           key={getEntityNamespaceKeyWithDto(entityClass, dto)}
           dto={dto}
-          entityName={entityClass}
+          entityClass={entityClass}
         />
       ))}
     </>

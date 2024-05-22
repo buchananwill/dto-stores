@@ -15,13 +15,13 @@ import { useGlobalDispatch } from "selective-context";
 
 export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
   dto,
-  entityName,
+  entityClass,
 }: DtoControllerProps<T>) {
-  const { currentState } = useDtoStoreController(dto, entityName);
+  const { currentState } = useDtoStoreController(dto, entityClass);
   const initialDtoRef = useRef<T>(dto);
 
   const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
-    getChangesContextKey(entityName),
+    getChangesContextKey(entityClass),
   );
 
   useEffect(() => {

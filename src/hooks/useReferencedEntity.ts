@@ -1,18 +1,25 @@
-import { useGlobalDispatch } from "selective-context";
-import { useDtoStoreDispatch } from "./useDtoStoreDispatch";
+import {
+  useGlobalDispatch,
+  useGlobalDispatchAndListener,
+} from "selective-context";
 import { HasId } from "../types";
 import { useEffect } from "react";
+import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
 
 export function useReferencedEntity<T extends HasId>(
-  entityClass: string,
   id: string | number,
+  entityClass: string,
   listenerKey: string,
 ) {
   const { dispatchWithoutListen } = useGlobalDispatch(`${entityClass}:idList`);
 
-  const { currentState, dispatchWithoutControl } = useDtoStoreDispatch<
+  const { currentState, dispatchWithoutControl } = useGlobalDispatchAndListener<
     T | undefined
-  >(id, entityClass, listenerKey);
+  >({
+    contextKey: getEntityNamespaceContextKey(entityClass, id),
+    initialValue: undefined,
+    listenerKey: listenerKey,
+  });
 
   useEffect(() => {
     dispatchWithoutListen((list: (string | number)[]) => [...list, id]);

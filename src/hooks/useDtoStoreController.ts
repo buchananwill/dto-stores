@@ -6,10 +6,10 @@ import { useGlobalController } from "selective-context";
 
 export function useDtoStoreController<T extends HasId>(
   dto: T,
-  entityType: string,
+  entityClass: string,
 ) {
   return useGlobalController<T>({
-    contextKey: getEntityNamespaceContextKey(entityType, dto.id),
+    contextKey: getEntityNamespaceContextKey(entityClass, dto.id),
     initialValue: dto,
     listenerKey: "controller",
   });

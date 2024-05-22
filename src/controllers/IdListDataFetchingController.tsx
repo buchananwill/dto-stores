@@ -1,13 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useGlobalController, useGlobalReadAny } from "selective-context";
-import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
-import { EmptyArray, HasId, HasIdClass, IdListControllerProps } from "../types";
-import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
-import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
+import { useGlobalController } from "selective-context";
+import { HasId, HasIdClass, IdListControllerProps } from "../types";
 import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
-import { getAddedContextKey } from "../functions/name-space-keys/getAddedContextKey";
 import { DtoControllerArray } from "./DtoControllerArray";
 
 export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
@@ -23,7 +19,7 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
     initialValue: idList,
   });
   const [entitiesFromDb, setEntitiesFromDb] = useState<T[]>([]);
-  const idListRef = useRef(idList);
+  const idListRef = useRef([] as U[]);
   const isLoading = useRef(false);
 
   const fetchNewEntities = useCallback(
@@ -31,6 +27,7 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
       isLoading.current = true;
       try {
         let newItems = await getServerAction([...newIdSet.values()]);
+        console.log(newItems);
         setEntitiesFromDb((list) => [...list, ...newItems]);
       } finally {
         isLoading.current = false;
@@ -40,6 +37,7 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
   );
 
   useEffect(() => {
+    console.log(idListRef, stateIdList);
     // make id set from list, and list ref,
     const stateIdSet = new Set<U>(stateIdList);
     const refIdSet = new Set(idListRef.current);

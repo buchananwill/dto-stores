@@ -1,3 +1,4 @@
+"use client";
 import { ChangesCallbackMap, UnsavedChangesToast } from "../types";
 import { useGlobalController } from "selective-context";
 import React, { useCallback } from "react";

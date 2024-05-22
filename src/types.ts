@@ -16,7 +16,7 @@ export interface HasUuidDto {
 
 export interface DtoControllerProps<T extends HasNumberIdDto | HasUuidDto> {
   dto: T;
-  entityName: string;
+  entityClass: string;
 }
 
 export const EmptyArray = [];

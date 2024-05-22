@@ -16,8 +16,8 @@ export function ReferencedEntityUiWrapper<T extends HasId>({
 }) {
   const listenerKey = `${entityClass}:${id}:ui-wrapper`;
   const { currentState, dispatchWithoutControl } = useReferencedEntity<T>(
-    entityClass,
     id,
+    entityClass,
     listenerKey,
   );
 

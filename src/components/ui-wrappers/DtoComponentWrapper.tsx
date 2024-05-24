@@ -1,9 +1,9 @@
 "use client";
 
-import { DtoUiComponent, Entity, HasId } from "../../types";
+import { DtoUiComponent, Entity } from "../../types";
 import React from "react";
-import { useDtoStoreDispatchAndListener } from "../../hooks/main/useDtoStoreDispatchAndListener";
-import { useDtoStoreDelete } from "../../hooks/main/useDtoStoreDelete";
+import { useDtoStoreDispatchAndListener } from "../../hooks/main";
+import { useDtoStoreDelete } from "../../hooks/main";
 
 export function DtoComponentWrapper<T extends Entity>({
   entityClass,

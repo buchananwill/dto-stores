@@ -1,4 +1,4 @@
-import { Entity, HasId } from "../../types";
+import { Entity } from "../../types";
 import { getEntityNamespaceContextKey } from "./getEntityNamespaceContextKey";
 
 export function getEntityNamespaceKeyWithDto<T extends Entity>(

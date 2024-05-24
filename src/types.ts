@@ -6,21 +6,8 @@ import {
   SetStateAction,
 } from "react";
 import { SelectiveContextReadAll } from "selective-context/dist/types";
-
-export interface HasNumberIdDto {
-  id: number;
-}
-
-export interface HasUuidDto {
-  id: string;
-}
-
 export interface Entity {
   id: string | number;
-}
-
-export interface EntityOfId<U extends string | number> {
-  id: U;
 }
 
 export interface DtoControllerProps<T extends Entity> {
@@ -29,7 +16,6 @@ export interface DtoControllerProps<T extends Entity> {
 }
 
 export const EmptyArray = [];
-export type HasId = HasNumberIdDto | HasUuidDto;
 export const ObjectPlaceholder = {};
 
 export interface DtoControllerArrayProps<T extends Entity> {

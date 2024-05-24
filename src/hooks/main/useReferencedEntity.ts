@@ -2,7 +2,7 @@ import {
   useGlobalDispatch,
   useGlobalDispatchAndListener,
 } from "selective-context";
-import { Entity, HasId } from "../../types";
+import { Entity } from "../../types";
 import { useEffect } from "react";
 import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { safeFunctionalSplice } from "../../functions/safeFunctionalSplice";
@@ -26,7 +26,7 @@ export function useReferencedEntity<T extends Entity>(
     dispatchWithoutListen((list: (string | number)[]) => [...list, id]);
     return () => {
       dispatchWithoutListen((list: (string | number)[]) => {
-        let updatedList = list;
+        let updatedList: Array<string | number>;
         updatedList = safeFunctionalSplice(list, id);
         return updatedList;
       });

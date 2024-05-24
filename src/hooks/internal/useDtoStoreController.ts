@@ -1,5 +1,5 @@
 "use client";
-import { Entity, HasId } from "../../types";
+import { Entity } from "../../types";
 
 import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalController } from "selective-context";

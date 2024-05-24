@@ -1,4 +1,4 @@
-export * from "./DtoComponentArray";
-export * from "./DtoControllerArray";
-export * from "./EditAddDeleteDtoControllerArray";
-export * from "./DataFetchingEditDtoControllerArray";
+export { DtoComponentArray } from "./DtoComponentArray";
+export { DtoControllerArray } from "./DtoControllerArray";
+export { EditAddDeleteDtoControllerArray } from "./EditAddDeleteDtoControllerArray";
+export { DataFetchingEditDtoControllerArray } from "./DataFetchingEditDtoControllerArray";

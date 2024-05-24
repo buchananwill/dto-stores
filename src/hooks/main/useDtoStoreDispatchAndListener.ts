@@ -1,5 +1,5 @@
 "use client";
-import { HasId, ObjectPlaceholder } from "../../types";
+import { ObjectPlaceholder } from "../../types";
 
 import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalDispatchAndListener } from "selective-context";

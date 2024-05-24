@@ -2,7 +2,7 @@
 
 import { DtoUiArrayGeneratorProps, EmptyArray, Entity } from "../../types";
 import { getIdListContextKey } from "../../functions/name-space-keys/getIdListContextKey";
-import { DtoComponentWrapper } from "../ui-wrappers/DtoComponentWrapper";
+import { DtoComponentWrapper } from "../ui-wrappers";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 

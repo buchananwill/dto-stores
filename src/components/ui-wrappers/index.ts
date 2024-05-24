@@ -1,2 +1,2 @@
-export * from "./DtoComponentWrapper";
-export * from "./ReferencedEntityUiWrapper";
+export { DtoComponentWrapper } from "./DtoComponentWrapper";
+export { ReferencedEntityUiWrapper } from "./ReferencedEntityUiWrapper";

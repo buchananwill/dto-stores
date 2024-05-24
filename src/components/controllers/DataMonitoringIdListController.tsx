@@ -5,7 +5,7 @@ import { IdListControllerProps } from "../../types";
 import { getIdListContextKey } from "../../functions/name-space-keys/getIdListContextKey";
 import React, { useMemo } from "react";
 
-import { useEffectSyncDeepEqualWithDispatch } from "../../hooks/util/useEffectSyncDeepEqualWithDispatch";
+import { useEffectSyncDeepEqualWithDispatch } from "../../hooks/util";
 
 function Controller({ entityClass, entityList }: IdListControllerProps<any>) {
   const idList = useMemo(() => {

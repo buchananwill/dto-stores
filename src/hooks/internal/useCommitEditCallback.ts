@@ -1,6 +1,6 @@
-import { CommitEditCallbackParams, HasIdClass } from "../types";
+import { CommitEditCallbackParams, HasIdClass } from "../../types";
 import { useCallback } from "react";
-import { handleCommitEdits } from "../functions/handleCommitEdits";
+import { handleCommitEdits } from "../../functions/handleCommitEdits";
 
 export function useCommitEditCallback<
   T extends HasIdClass<U>,

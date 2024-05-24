@@ -1,7 +1,7 @@
 import { DtoUiComponentLazy, Entity, HasId } from "../../types";
-import { useReferencedEntity } from "../../hooks/useReferencedEntity";
+import { useReferencedEntity } from "../../hooks/main/useReferencedEntity";
 import React, { Dispatch, ReactNode, SetStateAction } from "react";
-import { useDtoStoreDelete } from "../../hooks/useDtoStoreDelete";
+import { useDtoStoreDelete } from "../../hooks/main/useDtoStoreDelete";
 
 export function ReferencedEntityUiWrapper<T extends Entity>({
   renderAs: Component,

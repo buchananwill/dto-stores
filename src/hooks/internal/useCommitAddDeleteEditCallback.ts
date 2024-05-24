@@ -1,8 +1,8 @@
-import { CommitChangesCallbackParams, HasIdClass } from "../types";
+import { CommitChangesCallbackParams, HasIdClass } from "../../types";
 import { useCallback } from "react";
-import { handleCommitEdits } from "../functions/handleCommitEdits";
-import { handleCommitDeletes } from "../functions/handleCommitDeletes";
-import { handleCommitAdditions } from "../functions/handleCommitAdditions";
+import { handleCommitEdits } from "../../functions/handleCommitEdits";
+import { handleCommitDeletes } from "../../functions/handleCommitDeletes";
+import { handleCommitAdditions } from "../../functions/handleCommitAdditions";
 
 export function useCommitAddDeleteEditCallback<
   T extends HasIdClass<U>,

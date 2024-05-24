@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { ArrayPlaceholder, useGlobalController } from "selective-context";
-import { DataFetchingProps, HasIdClass } from "../types";
-import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
-import { getMasterListContextKey } from "../functions/name-space-keys/getMasterListContextKey";
-import { Controller } from "../literals";
+import { DataFetchingProps, HasIdClass } from "../../types";
+import { getIdListContextKey } from "../../functions/name-space-keys/getIdListContextKey";
+import { getMasterListContextKey } from "../../functions/name-space-keys/getMasterListContextKey";
+import { Controller } from "../../literals";
 
 export function useMasterListFetchController<T extends HasIdClass<U>, U>({
   entityClass,

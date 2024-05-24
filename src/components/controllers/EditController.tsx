@@ -2,9 +2,9 @@
 
 import { useGlobalReadAny } from "selective-context";
 import { EditControllerProps } from "../../types";
-import { useChangesTrackerControllers } from "../../hooks/useChangesTrackerControllers";
-import { useHasChangesFlagCallback } from "../../hooks/useHasChangesFlagCallback";
-import { useCommitEditCallback } from "../../hooks/useCommitEditCallback";
+import { useChangesTrackerControllers } from "../../hooks/internal/useChangesTrackerControllers";
+import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFlagCallback";
+import { useCommitEditCallback } from "../../hooks/internal/useCommitEditCallback";
 
 export function EditController({
   entityClass,

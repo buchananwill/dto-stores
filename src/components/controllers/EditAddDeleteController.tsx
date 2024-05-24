@@ -2,9 +2,9 @@
 
 import { useGlobalReadAny } from "selective-context";
 import { TrackChangesProps } from "../../types";
-import { useCommitAddDeleteEditCallback } from "../../hooks/useCommitAddDeleteEditCallback";
-import { useChangesTrackerControllers } from "../../hooks/useChangesTrackerControllers";
-import { useHasChangesFlagCallback } from "../../hooks/useHasChangesFlagCallback";
+import { useCommitAddDeleteEditCallback } from "../../hooks/internal/useCommitAddDeleteEditCallback";
+import { useChangesTrackerControllers } from "../../hooks/internal/useChangesTrackerControllers";
+import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFlagCallback";
 
 export function EditAddDeleteController({
   entityClass,

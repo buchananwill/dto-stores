@@ -2,10 +2,10 @@ import {
   useGlobalDispatch,
   useGlobalDispatchAndListener,
 } from "selective-context";
-import { Entity, HasId } from "../types";
+import { Entity, HasId } from "../../types";
 import { useEffect } from "react";
-import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
-import { safeFunctionalSplice } from "../functions/safeFunctionalSplice";
+import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
+import { safeFunctionalSplice } from "../../functions/safeFunctionalSplice";
 
 export function useReferencedEntity<T extends Entity>(
   id: string | number,

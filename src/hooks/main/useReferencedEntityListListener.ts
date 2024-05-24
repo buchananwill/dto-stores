@@ -1,5 +1,5 @@
 import { useGlobalDispatch, useGlobalListenerGroup } from "selective-context";
-import { EmptyArray, Entity } from "../types";
+import { EmptyArray, Entity } from "../../types";
 import { useEffect, useMemo } from "react";
 
 const initialMap = new Map<string, unknown>();

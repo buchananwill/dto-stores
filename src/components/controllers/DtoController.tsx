@@ -10,7 +10,7 @@ import {
   HasNumberIdDto,
   HasUuidDto,
 } from "../../types";
-import { useDtoStoreController } from "../../hooks/useDtoStoreController";
+import { useDtoStoreController } from "../../hooks/internal/useDtoStoreController";
 import { getChangesContextKey } from "../../functions/name-space-keys/getChangesContextKey";
 import { useGlobalDispatch } from "selective-context";
 

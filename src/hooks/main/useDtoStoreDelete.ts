@@ -1,5 +1,5 @@
-import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
-import { EmptyArray } from "../types";
+import { getDeletedContextKey } from "../../functions/name-space-keys/getDeletedContextKey";
+import { EmptyArray } from "../../types";
 import { useMemo } from "react";
 import { useGlobalDispatchAndListener } from "selective-context";
 

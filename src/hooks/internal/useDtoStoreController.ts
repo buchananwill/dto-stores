@@ -1,7 +1,7 @@
 "use client";
-import { Entity, HasId } from "../types";
+import { Entity, HasId } from "../../types";
 
-import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
+import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalController } from "selective-context";
 
 export function useDtoStoreController<T extends Entity>(

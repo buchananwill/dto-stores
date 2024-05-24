@@ -1,6 +1,6 @@
-import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
+import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 
-import { Entity, ObjectPlaceholder } from "../types";
+import { Entity, ObjectPlaceholder } from "../../types";
 import { useGlobalListener } from "selective-context";
 
 export function useDtoStoreListener<T extends Entity>(

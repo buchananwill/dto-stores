@@ -5,11 +5,11 @@ import {
 } from "selective-context";
 
 import { useEffect, useRef } from "react";
-import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
-import { getAddedContextKey } from "../functions/name-space-keys/getAddedContextKey";
-import { getMasterListContextKey } from "../functions/name-space-keys/getMasterListContextKey";
-import { HasIdClass } from "../types";
-import { Controller } from "../literals";
+import { getDeletedContextKey } from "../../functions/name-space-keys/getDeletedContextKey";
+import { getAddedContextKey } from "../../functions/name-space-keys/getAddedContextKey";
+import { getMasterListContextKey } from "../../functions/name-space-keys/getMasterListContextKey";
+import { HasIdClass } from "../../types";
+import { Controller } from "../../literals";
 
 const masterListListener = `masterList`;
 

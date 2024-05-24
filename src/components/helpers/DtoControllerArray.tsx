@@ -1,12 +1,12 @@
-import { DtoController } from "./DtoController";
-import { DtoListControllerProps, HasId } from "../types";
-import { getEntityNamespaceKeyWithDto } from "../functions/name-space-keys/getEntityNamespaceKeyWithDto";
+import { DtoController } from "../controllers/DtoController";
+import { DtoControllerArrayProps, Entity } from "../../types";
+import { getEntityNamespaceKeyWithDto } from "../../functions/name-space-keys/getEntityNamespaceKeyWithDto";
 import React from "react";
 
-function dtoControllerArray<T extends HasId>({
+function dtoControllerArray<T extends Entity>({
   dtoList,
   entityClass,
-}: DtoListControllerProps<T>) {
+}: DtoControllerArrayProps<T>) {
   return (
     <>
       {dtoList.map((dto) => (

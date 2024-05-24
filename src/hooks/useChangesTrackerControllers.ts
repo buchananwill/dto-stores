@@ -1,41 +1,43 @@
 import { useGlobalController, useGlobalDispatch } from "selective-context";
 import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
-import { ChangesCallbackMap, EmptyArray } from "../types";
+import { ChangesCallbackMap, ChangesTracker, EmptyArray } from "../types";
 import { getDeletedContextKey } from "../functions/name-space-keys/getDeletedContextKey";
 import { getAddedContextKey } from "../functions/name-space-keys/getAddedContextKey";
 
-export function useChangesTrackerControllers(entityName: string) {
+export function useChangesTrackerControllers<U extends string | number>(
+  entityName: string,
+) {
   const { currentState: changedDtos, dispatch: dispatchChangesList } =
-    useGlobalController<(string | number)[]>({
+    useGlobalController<U[]>({
       contextKey: getChangesContextKey(entityName),
       listenerKey: `${entityName}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
   const { currentState: deletedDtos, dispatch: dispatchDeletionList } =
-    useGlobalController<(string | number)[]>({
+    useGlobalController<U[]>({
       contextKey: getDeletedContextKey(entityName),
       listenerKey: `${entityName}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
   const { currentState: transientDtoIdList, dispatch: dispatchTransientList } =
-    useGlobalController<(string | number)[]>({
+    useGlobalController<U[]>({
       contextKey: getAddedContextKey(entityName),
       listenerKey: `${entityName}:${listenerKey}`,
       initialValue: EmptyArray,
     });
 
-  const { dispatchWithoutListen } =
+  const { dispatchWithoutListen: dispatchUnsavedFlag } =
     useGlobalDispatch<ChangesCallbackMap>("unsavedChanges");
-  return {
+  return <ChangesTracker<U>>{
     changedDtos,
     dispatchChangesList,
     deletedDtos,
     dispatchDeletionList,
     transientDtoIdList,
     dispatchTransientList,
-    dispatchWithoutListen,
+    dispatchUnsavedFlag,
   };
 }
 

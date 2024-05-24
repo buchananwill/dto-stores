@@ -1,15 +1,10 @@
-import {
-  useGlobalDispatch,
-  useGlobalDispatchAndListener,
-  useGlobalListenerGroup,
-} from "selective-context";
-import { EmptyArray, HasId } from "../types";
+import { useGlobalDispatch, useGlobalListenerGroup } from "selective-context";
+import { EmptyArray, Entity } from "../types";
 import { useEffect, useMemo } from "react";
-import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
 
 const initialMap = new Map<string, unknown>();
 
-export function useReferencedEntityListListener<T extends HasId>(
+export function useReferencedEntityListListener<T extends Entity>(
   idList: (string | number)[],
   entityClass: string,
   listenerKey: string,

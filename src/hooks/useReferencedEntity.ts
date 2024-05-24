@@ -2,11 +2,12 @@ import {
   useGlobalDispatch,
   useGlobalDispatchAndListener,
 } from "selective-context";
-import { HasId } from "../types";
+import { Entity, HasId } from "../types";
 import { useEffect } from "react";
 import { getEntityNamespaceContextKey } from "../functions/name-space-keys/getEntityNamespaceContextKey";
+import { safeFunctionalSplice } from "../functions/safeFunctionalSplice";
 
-export function useReferencedEntity<T extends HasId>(
+export function useReferencedEntity<T extends Entity>(
   id: string | number,
   entityClass: string,
   listenerKey: string,
@@ -25,9 +26,9 @@ export function useReferencedEntity<T extends HasId>(
     dispatchWithoutListen((list: (string | number)[]) => [...list, id]);
     return () => {
       dispatchWithoutListen((list: (string | number)[]) => {
-        const indexFirst = list.findIndex((item) => item === id);
-        if (indexFirst >= 0) return list.slice().splice(indexFirst, 1);
-        else return list;
+        let updatedList = list;
+        updatedList = safeFunctionalSplice(list, id);
+        return updatedList;
       });
     };
   }, [dispatchWithoutListen, id]);

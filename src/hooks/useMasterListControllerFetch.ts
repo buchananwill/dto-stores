@@ -1,24 +1,30 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useGlobalController } from "selective-context";
-import { HasId, HasIdClass, IdListControllerProps } from "../types";
+import { useCallback, useEffect, useRef } from "react";
+import { ArrayPlaceholder, useGlobalController } from "selective-context";
+import { DataFetchingProps, HasIdClass } from "../types";
 import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
-import { DtoControllerArray } from "./DtoControllerArray";
+import { getMasterListContextKey } from "../functions/name-space-keys/getMasterListContextKey";
+import { Controller } from "../literals";
 
-export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
+export function useMasterListFetchController<T extends HasIdClass<U>, U>({
   entityClass,
   idList,
   getServerAction,
-}: IdListControllerProps<T, U> & {
-  getServerAction: (idList: U[]) => Promise<T[]>;
-}) {
-  const { currentState: stateIdList, dispatch } = useGlobalController({
+}: DataFetchingProps<T, U>) {
+  const { currentState: stateIdList } = useGlobalController({
     contextKey: getIdListContextKey(entityClass),
-    listenerKey: listenerKey,
+    listenerKey: Controller,
     initialValue: idList,
   });
-  const [entitiesFromDb, setEntitiesFromDb] = useState<T[]>([]);
+
+  const { currentState: masterList, dispatch: dispatchMasterList } =
+    useGlobalController({
+      contextKey: getMasterListContextKey(entityClass),
+      listenerKey: Controller,
+      initialValue: ArrayPlaceholder as T[],
+    });
+
   const idListRef = useRef([] as U[]);
   const isLoading = useRef(false);
 
@@ -28,7 +34,7 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
       try {
         let newItems = await getServerAction([...newIdSet.values()]);
         console.log(newItems);
-        setEntitiesFromDb((list) => [...list, ...newItems]);
+        dispatchMasterList((list) => [...list, ...newItems]);
       } finally {
         isLoading.current = false;
       }
@@ -37,7 +43,6 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
   );
 
   useEffect(() => {
-    console.log(idListRef, stateIdList);
     // make id set from list, and list ref,
     const stateIdSet = new Set<U>(stateIdList);
     const refIdSet = new Set(idListRef.current);
@@ -58,7 +63,7 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
 
     // ...remove them from the state
     if (notListenedIdSet.size > 0)
-      setEntitiesFromDb((entities) =>
+      dispatchMasterList((entities) =>
         entities.filter((entity) => !notListenedIdSet.has(entity.id)),
       );
 
@@ -71,12 +76,5 @@ export function IdListDataFetchingController<T extends HasIdClass<U>, U>({
     idListRef.current = stateIdList;
   }, [stateIdList, getServerAction]);
 
-  return (
-    <DtoControllerArray
-      dtoList={entitiesFromDb as HasId[]}
-      entityClass={entityClass}
-    />
-  );
+  return { masterList };
 }
-
-const listenerKey = "controller";

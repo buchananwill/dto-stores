@@ -6,14 +6,15 @@ import { isEqual } from "lodash";
 import {
   DtoControllerProps,
   EmptyArray,
+  Entity,
   HasNumberIdDto,
   HasUuidDto,
-} from "../types";
-import { useDtoStoreController } from "../hooks/useDtoStoreController";
-import { getChangesContextKey } from "../functions/name-space-keys/getChangesContextKey";
+} from "../../types";
+import { useDtoStoreController } from "../../hooks/useDtoStoreController";
+import { getChangesContextKey } from "../../functions/name-space-keys/getChangesContextKey";
 import { useGlobalDispatch } from "selective-context";
 
-export function DtoController<T extends HasNumberIdDto | HasUuidDto>({
+export function DtoController<T extends Entity>({
   dto,
   entityClass,
 }: DtoControllerProps<T>) {

@@ -1,12 +1,12 @@
 "use client";
 
-import { DtoUiArrayGeneratorProps, EmptyArray, HasId } from "../types";
-import { getIdListContextKey } from "../functions/name-space-keys/getIdListContextKey";
-import { DtoComponentWrapper } from "./DtoComponentWrapper";
+import { DtoUiArrayGeneratorProps, EmptyArray, Entity } from "../../types";
+import { getIdListContextKey } from "../../functions/name-space-keys/getIdListContextKey";
+import { DtoComponentWrapper } from "../ui-wrappers/DtoComponentWrapper";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 
-export function DtoComponentArrayGenerator<T extends HasId>({
+export function DtoComponentArray<T extends Entity>({
   entityClass,
   eachAs: WrappedComponent,
 }: DtoUiArrayGeneratorProps<T>) {

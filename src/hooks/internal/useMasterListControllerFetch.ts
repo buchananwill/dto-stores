@@ -3,9 +3,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import { ArrayPlaceholder, useGlobalController } from "selective-context";
 import { DataFetchingProps, HasIdClass } from "../../types";
-import { getIdListContextKey } from "../../functions/name-space-keys/getIdListContextKey";
-import { getMasterListContextKey } from "../../functions/name-space-keys/getMasterListContextKey";
-import { Controller } from "../../literals";
+import { Controller, KEY_TYPES } from "../../literals";
+import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 
 export function useMasterListFetchController<T extends HasIdClass<U>, U>({
   entityClass,
@@ -13,14 +12,14 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
   getServerAction,
 }: DataFetchingProps<T, U>) {
   const { currentState: stateIdList } = useGlobalController({
-    contextKey: getIdListContextKey(entityClass),
+    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST),
     listenerKey: Controller,
     initialValue: idList,
   });
 
   const { currentState: masterList, dispatch: dispatchMasterList } =
     useGlobalController({
-      contextKey: getMasterListContextKey(entityClass),
+      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.MASTER_LIST),
       listenerKey: Controller,
       initialValue: ArrayPlaceholder as T[],
     });

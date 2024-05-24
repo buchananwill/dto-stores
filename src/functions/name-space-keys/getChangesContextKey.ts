@@ -1,5 +1,2 @@
-import {getNameSpacedKey} from "./getNameSpacedKey";
-
-export function getChangesContextKey(entityName: string) {
-    return getNameSpacedKey(entityName, 'changes');
-}
+import { getNameSpacedKey } from "./getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";

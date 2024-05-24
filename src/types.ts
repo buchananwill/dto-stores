@@ -3,9 +3,12 @@ import {
   FC,
   MutableRefObject,
   PropsWithChildren,
+  ReactNode,
   SetStateAction,
 } from "react";
 import { SelectiveContextReadAll } from "selective-context/dist/types";
+import { KEY_TYPES } from "./literals";
+
 export interface Entity {
   id: string | number;
 }
@@ -91,12 +94,16 @@ export interface DtoUiComponentProps<T extends Entity>
 
 export type DtoUiComponent<T extends Entity> = FC<DtoUiComponentProps<T>>;
 
-export type DtoUiComponentLazy<T extends Entity> = FC<DtoUiComponentProps<T>>;
+export type LazyDtoUiComponent<T extends Entity> = FC<DtoUiComponentProps<T>>;
 
 export interface DtoUiArrayGeneratorProps<T extends Entity> {
   entityClass: string;
   eachAs?: DtoUiComponent<T>;
 }
+export type LazyDtoUiArrayGeneratorProps<T extends Entity> = Omit<
+  LazyDtoComponentWrapperProps<T>,
+  "id"
+>;
 
 export type ChangesCallbackMap = Map<
   string,
@@ -120,3 +127,11 @@ export type EditControllerProps = Pick<
   TrackChangesProps<any, any>,
   "entityClass" | "updateServerAction"
 >;
+export type ContextNamespace = (typeof KEY_TYPES)[keyof typeof KEY_TYPES];
+
+export interface LazyDtoComponentWrapperProps<T extends Entity> {
+  renderAs: LazyDtoUiComponent<T>;
+  id: string | number;
+  entityClass: string;
+  whileLoading: () => ReactNode;
+}

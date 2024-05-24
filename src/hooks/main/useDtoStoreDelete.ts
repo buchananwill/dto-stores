@@ -1,7 +1,8 @@
-import { getDeletedContextKey } from "../../functions/name-space-keys/getDeletedContextKey";
 import { EmptyArray } from "../../types";
 import { useMemo } from "react";
 import { useGlobalDispatchAndListener } from "selective-context";
+import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";
 
 export function useDtoStoreDelete(
   entityClass: string,
@@ -12,7 +13,7 @@ export function useDtoStoreDelete(
     currentState: deletedEntities,
     dispatchWithoutControl: dispatchDeletion,
   } = useGlobalDispatchAndListener<(string | number)[]>({
-    contextKey: getDeletedContextKey(entityClass),
+    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.DELETED),
     initialValue: EmptyArray,
     listenerKey: listenerKey,
   });

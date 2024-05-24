@@ -1,3 +1,2 @@
-export function getMasterListContextKey(entityClass: string) {
-  return `${entityClass}:masterList`;
-}
+import { getNameSpacedKey } from "./getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";

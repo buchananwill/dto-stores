@@ -1,5 +1,2 @@
-import {getNameSpacedKey} from "./getNameSpacedKey";
-
-export function getDeletedContextKey(entityName: string) {
-    return getNameSpacedKey(entityName, 'deleted');
-}
+import { getNameSpacedKey } from "./getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";

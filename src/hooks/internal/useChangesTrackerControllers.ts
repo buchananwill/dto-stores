@@ -1,30 +1,28 @@
 import { useGlobalController, useGlobalDispatch } from "selective-context";
-import { getChangesContextKey } from "../../functions/name-space-keys/getChangesContextKey";
 import { ChangesCallbackMap, ChangesTracker, EmptyArray } from "../../types";
-import { getDeletedContextKey } from "../../functions/name-space-keys/getDeletedContextKey";
-import { getAddedContextKey } from "../../functions/name-space-keys/getAddedContextKey";
-import { Controller } from "../../literals";
+import { Controller, KEY_TYPES } from "../../literals";
+import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 
 export function useChangesTrackerControllers<U extends string | number>(
-  entityName: string,
+  entityClass: string,
 ) {
   const { currentState: changedDtos, dispatch: dispatchChangesList } =
     useGlobalController<U[]>({
-      contextKey: getChangesContextKey(entityName),
+      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.CHANGES),
       listenerKey: Controller,
       initialValue: EmptyArray,
     });
 
   const { currentState: deletedDtos, dispatch: dispatchDeletionList } =
     useGlobalController<U[]>({
-      contextKey: getDeletedContextKey(entityName),
+      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.DELETED),
       listenerKey: Controller,
       initialValue: EmptyArray,
     });
 
   const { currentState: transientDtoIdList, dispatch: dispatchTransientList } =
     useGlobalController<U[]>({
-      contextKey: getAddedContextKey(entityName),
+      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ADDED),
       listenerKey: Controller,
       initialValue: EmptyArray,
     });

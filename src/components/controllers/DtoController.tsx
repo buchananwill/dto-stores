@@ -5,8 +5,9 @@ import { isEqual } from "lodash";
 
 import { DtoControllerProps, Entity } from "../../types";
 import { useDtoStoreController } from "../../hooks/internal/useDtoStoreController";
-import { getChangesContextKey } from "../../functions/name-space-keys/getChangesContextKey";
 import { useGlobalDispatch } from "selective-context";
+import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";
 
 export function DtoController<T extends Entity>({
   dto,
@@ -16,7 +17,7 @@ export function DtoController<T extends Entity>({
   const initialDtoRef = useRef<T>(dto);
 
   const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
-    getChangesContextKey(entityClass),
+    getNameSpacedKey(entityClass, KEY_TYPES.CHANGES),
   );
 
   useEffect(() => {

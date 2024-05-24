@@ -1,16 +1,22 @@
 "use client";
 
-import { DtoUiArrayGeneratorProps, EmptyArray, Entity } from "../../types";
-import { DtoComponentWrapper } from "../ui-wrappers";
+import {
+  DtoUiArrayGeneratorProps,
+  EmptyArray,
+  Entity,
+  LazyDtoUiArrayGeneratorProps,
+} from "../../types";
+import { DtoComponentWrapper, LazyDtoComponentWrapper } from "../ui-wrappers";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { KEY_TYPES } from "../../literals";
 
-export function DtoComponentArray<T extends Entity>({
+export function LazyDtoComponentArray<T extends Entity>({
   entityClass,
-  eachAs: WrappedComponent,
-}: DtoUiArrayGeneratorProps<T>) {
+  renderAs: WrappedComponent,
+  whileLoading,
+}: LazyDtoUiArrayGeneratorProps<T>) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState } = useGlobalListener<number[]>({
     contextKey,
@@ -21,11 +27,12 @@ export function DtoComponentArray<T extends Entity>({
   return (
     <>
       {currentState.map((id: string | number) => (
-        <DtoComponentWrapper<T>
+        <LazyDtoComponentWrapper<T>
           entityClass={entityClass}
           id={id}
           key={`${entityClass}:${id}`}
-          uiComponent={WrappedComponent}
+          renderAs={WrappedComponent}
+          whileLoading={whileLoading}
         />
       ))}
     </>

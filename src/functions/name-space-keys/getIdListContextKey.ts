@@ -1,5 +1,2 @@
-import {getNameSpacedKey} from "./getNameSpacedKey";
-
-export function getIdListContextKey(entityName: string) {
-    return getNameSpacedKey(entityName, 'idList');
-}
+import { getNameSpacedKey } from "./getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";

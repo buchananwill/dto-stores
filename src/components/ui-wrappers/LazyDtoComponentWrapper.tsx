@@ -1,19 +1,13 @@
-import { DtoUiComponentLazy, Entity } from "../../types";
-import { useReferencedEntity } from "../../hooks/main";
-import React, { Dispatch, ReactNode, SetStateAction } from "react";
-import { useDtoStoreDelete } from "../../hooks/main";
+import { Entity, LazyDtoComponentWrapperProps } from "../../types";
+import { useDtoStoreDelete, useReferencedEntity } from "../../hooks/main";
+import React, { Dispatch, SetStateAction } from "react";
 
-export function ReferencedEntityUiWrapper<T extends Entity>({
+export function LazyDtoComponentWrapper<T extends Entity>({
   renderAs: Component,
   id,
   entityClass,
   whileLoading: Loading,
-}: {
-  renderAs: DtoUiComponentLazy<T>;
-  id: string | number;
-  entityClass: string;
-  whileLoading: () => ReactNode;
-}) {
+}: LazyDtoComponentWrapperProps<T>) {
   const listenerKey = `${entityClass}:${id}:ui-wrapper`;
   const { currentState, dispatchWithoutControl } = useReferencedEntity<T>(
     id,

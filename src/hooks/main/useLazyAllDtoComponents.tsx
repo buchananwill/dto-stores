@@ -3,11 +3,13 @@ import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedK
 import { KEY_TYPES } from "../../literals";
 
 import { DtoUiComponent, Entity } from "../../types";
-import { useDtoComponentArray } from "./useDtoComponentArray"; // Adjust the import path as necessary
+import { useLazyDtoComponentArray } from "./useLazyDtoComponentArray";
+import { ReactNode } from "react"; // Adjust the import path as necessary
 
 export function useLazyAllDtoComponents<T extends Entity>(
   entityClass: string,
   UiComponent: DtoUiComponent<T>,
+  Loading: () => ReactNode,
   listenerKey = "dtoComponentArrayGenerator",
 ) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
@@ -17,5 +19,5 @@ export function useLazyAllDtoComponents<T extends Entity>(
     initialValue: [],
   });
 
-  return useDtoComponentArray(entityClass, UiComponent, idList);
+  return useLazyDtoComponentArray(entityClass, UiComponent, idList, Loading);
 }

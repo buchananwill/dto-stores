@@ -1,6 +1,6 @@
 import React, { ReactNode, useMemo } from "react";
 
-import { DtoUiComponent, Entity, LazyDtoUiComponent } from "../../types";
+import { Entity, LazyDtoUiComponent } from "../../types";
 import { useLazyDtoComponent } from "./useLazyDtoComponent"; // Adjust the import path as necessary
 
 export function useLazyDtoComponentArray<T extends Entity>(

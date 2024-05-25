@@ -29,8 +29,8 @@ export function useMasterListControllerAddDelete<
     });
 
   const idList = useMemo(() => {
-    return entityList.map((dto) => dto.id);
-  }, [entityList]);
+    return masterList.map((dto) => dto.id);
+  }, [masterList]);
 
   const { dispatch } = useGlobalController({
     contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST),

@@ -32,7 +32,6 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
       isLoading.current = true;
       try {
         let newItems = await getServerAction([...newIdSet.values()]);
-        console.log(newItems);
         dispatchMasterList((list) => [...list, ...newItems]);
       } finally {
         isLoading.current = false;

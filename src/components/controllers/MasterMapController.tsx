@@ -43,10 +43,6 @@ export function MasterMapController({
     initialValue: entityMap,
   });
 
-  console.log(idList);
-  console.log(contextKeys);
-  console.log(entityMap);
-
   useEffect(() => {
     dispatch(entityMap);
   }, [entityMap]);

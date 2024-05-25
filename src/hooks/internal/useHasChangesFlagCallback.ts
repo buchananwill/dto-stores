@@ -34,5 +34,5 @@ export function useHasChangesFlagCallback(
       });
       hasChangesRef.current = hasChanges;
     }
-  }, [apiCallbackRef, hasChangesRef]);
+  }, [apiCallbackRef, hasChangesRef, hasChanges]);
 }

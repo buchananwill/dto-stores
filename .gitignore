@@ -27,3 +27,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/.idea/dto-stores.iml
+/.idea/modules.xml
+/pnpm-lock.yaml
+/.idea/prettier.xml
+/.idea/vcs.xml

@@ -1,35 +1,31 @@
 "use client";
 
-import { DtoUiComponent, Entity } from "../../../types";
-import React, { memo, useCallback } from "react";
-import { useDtoStoreDelete, useDtoStoreDispatchAndListener } from "../index";
+import { DtoUiComponentProps, Entity, Identifier } from "../../../types";
+import React, { FC, useCallback } from "react";
+import { useDtoStore } from "../store/useDtoStore";
 
-export function useDtoComponent<T extends Entity>(
+export function useDtoComponent<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: DtoUiComponent<T>,
-) {
+  uiComponent: React.FC<Props & DtoUiComponentProps<T>>,
+): FC<Props & Entity> {
   return useCallback(
-    memo(({ id }: { id: string | number }) => {
-      const { currentState, dispatchWithoutControl } =
-        useDtoStoreDispatchAndListener<T>(
-          id,
-          entityClass,
-          UiComponent?.name || "component",
-        );
-      const { dispatchDeletion, deleted } = useDtoStoreDelete(entityClass, id);
+    ({ id, ...props }: { id: Identifier } & Props) => {
+      const listenerKey = uiComponent?.name || "component";
+      const entityProps = useDtoStore<T>({
+        id,
+        entityClass,
+        listenerKey,
+      });
 
-      return (
-        UiComponent && (
-          <UiComponent
-            entity={currentState}
-            entityClass={entityClass}
-            dispatchWithoutControl={dispatchWithoutControl}
-            deleted={deleted}
-            dispatchDeletion={dispatchDeletion}
-          />
-        )
-      );
-    }),
-    [entityClass, UiComponent],
+      const UiComponent = uiComponent as React.FC<Props>;
+
+      const finalProps = {
+        ...entityProps,
+        ...props,
+      } as Props & React.JSX.IntrinsicAttributes & DtoUiComponentProps<T>;
+
+      return <UiComponent {...finalProps} />;
+    },
+    [entityClass, uiComponent],
   );
 }

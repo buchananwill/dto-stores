@@ -5,9 +5,9 @@ import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpac
 import { KEY_TYPES } from "../../../literals";
 
 export function useDtoStoreDelete(
-  entityClass: string,
   id: string | number,
-  listenerKey: string = `${id}:uiWrapper`,
+  entityClass: string,
+  listenerKey = `${id}:uiWrapper`,
 ) {
   const {
     currentState: deletedEntities,

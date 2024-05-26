@@ -2,17 +2,22 @@ import {
   useGlobalDispatch,
   useGlobalDispatchAndListener,
 } from "selective-context";
-import { Entity } from "../../../types";
+import { Entity, LazyDtoStoreReturn } from "../../../types";
 import { useEffect } from "react";
 import { getEntityNamespaceContextKey } from "../../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { safeFunctionalSplice } from "../../../functions/safeFunctionalSplice";
+import { NamespacedHooks } from "./useNamespacedHooks";
+import { KEY_TYPES } from "../../../literals";
 
 export function useLazyDtoDispatchAndListen<T extends Entity>(
   id: string | number,
   entityClass: string,
   listenerKey: string,
-) {
-  const { dispatchWithoutListen } = useGlobalDispatch(`${entityClass}:idList`);
+): LazyDtoStoreReturn<T> {
+  const dispatchWithoutListen = NamespacedHooks.useDispatch(
+    entityClass,
+    KEY_TYPES.ID_LIST,
+  );
 
   const { currentState, dispatchWithoutControl } = useGlobalDispatchAndListener<
     T | undefined
@@ -33,5 +38,5 @@ export function useLazyDtoDispatchAndListen<T extends Entity>(
     };
   }, [dispatchWithoutListen, id]);
 
-  return { currentState, dispatchWithoutControl };
+  return { entity: currentState, dispatchWithoutControl };
 }

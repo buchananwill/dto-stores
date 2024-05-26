@@ -7,10 +7,11 @@ import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { KEY_TYPES } from "../../literals";
 
-export function DtoComponentArray<T extends Entity>({
+export function DtoComponentArray<T extends Entity, Props>({
   entityClass,
   eachAs: WrappedComponent,
-}: DtoUiArrayGeneratorProps<T>) {
+  ...props
+}: DtoUiArrayGeneratorProps<T, Props>) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState } = useGlobalListener<number[]>({
     contextKey,
@@ -21,11 +22,12 @@ export function DtoComponentArray<T extends Entity>({
   return (
     <>
       {currentState.map((id: string | number) => (
-        <DtoComponentWrapper<T>
+        <DtoComponentWrapper<T, Props>
           entityClass={entityClass}
           id={id}
           key={`${entityClass}:${id}`}
           uiComponent={WrappedComponent}
+          {...(props as Props)}
         />
       ))}
     </>

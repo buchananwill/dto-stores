@@ -1,25 +1,34 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { FC, memo, ReactNode, useMemo } from "react";
 
-import { Entity, LazyDtoUiComponent } from "../../../types";
+import { Entity, LazyDtoUiComponentProps } from "../../../types";
 import { useLazyDtoComponent } from "./useLazyDtoComponent"; // Adjust the import path as necessary
 
-export function useLazyDtoComponentArray<T extends Entity>(
+export function useLazyDtoComponentArray<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: LazyDtoUiComponent<T>,
+  UiComponent: FC<LazyDtoUiComponentProps<T> & Props>,
   idList: number[],
   Loading: () => ReactNode,
+  sharedProps: Props,
 ) {
-  const LazyDtoComponent = useLazyDtoComponent(
+  const LazyDtoComponent = useLazyDtoComponent<T, Props>(
     UiComponent,
     entityClass,
     Loading,
   );
 
+  const NamedExoticComponent = memo(LazyDtoComponent);
+
   return useMemo(
     () =>
-      idList.map((id) => (
-        <LazyDtoComponent id={id} key={`${entityClass}:${id}`} />
-      )),
-    [idList, entityClass],
+      idList.map((id) => {
+        return (
+          <NamedExoticComponent
+            id={id}
+            key={`${entityClass}:${id}`}
+            {...sharedProps}
+          />
+        );
+      }),
+    [idList, entityClass, sharedProps],
   );
 }

@@ -10,11 +10,11 @@ import { useGlobalDispatchAndListener } from "selective-context";
  * */
 export function useDtoStoreDispatchAndListener<T>(
   id: number | string,
-  entityType: string,
+  entityClass: string,
   listenerKey: string,
 ) {
   return useGlobalDispatchAndListener<T>({
-    contextKey: getEntityNamespaceContextKey(entityType, id),
+    contextKey: getEntityNamespaceContextKey(entityClass, id),
     initialValue: ObjectPlaceholder as T,
     listenerKey: listenerKey,
   });

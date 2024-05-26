@@ -2,15 +2,16 @@ import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpacedKey";
 import { KEY_TYPES } from "../../../literals";
 
-import { DtoUiComponent, Entity } from "../../../types";
+import { Entity, LazyDtoUiComponentProps } from "../../../types";
 import { useLazyDtoComponentArray } from "./useLazyDtoComponentArray";
-import { ReactNode } from "react"; // Adjust the import path as necessary
+import { FC, ReactNode } from "react"; // Adjust the import path as necessary
 
-export function useLazyAllDtoComponents<T extends Entity>(
+export function useLazyAllDtoComponents<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: DtoUiComponent<T>,
+  UiComponent: FC<LazyDtoUiComponentProps<T> & Props>,
   Loading: () => ReactNode,
   listenerKey = "dtoComponentArrayGenerator",
+  sharedProps?: Props,
 ) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState: idList } = useGlobalListener<number[]>({
@@ -19,5 +20,11 @@ export function useLazyAllDtoComponents<T extends Entity>(
     initialValue: [],
   });
 
-  return useLazyDtoComponentArray(entityClass, UiComponent, idList, Loading);
+  return useLazyDtoComponentArray(
+    entityClass,
+    UiComponent,
+    idList,
+    Loading,
+    sharedProps,
+  );
 }

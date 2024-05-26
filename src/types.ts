@@ -96,11 +96,20 @@ export interface DtoUiComponentProps<T extends Entity>
 
 export type DtoUiComponent<T extends Entity> = FC<DtoUiComponentProps<T>>;
 
-export type LazyDtoUiComponent<T extends Entity> = FC<DtoUiComponentProps<T>>;
+export type Identifier = string | number;
 
-export interface DtoUiArrayGeneratorProps<T extends Entity> {
+export type LazyDtoUiComponent<T extends Entity> = FC<
+  LazyDtoUiComponentProps<T>
+>;
+
+export type LazyDtoUiComponentProps<T extends Entity> = Omit<
+  DtoUiComponentProps<T>,
+  "deleted" | "dispatchDeletion"
+>;
+
+export interface DtoUiArrayGeneratorProps<T extends Entity, Props> {
   entityClass: string;
-  eachAs?: DtoUiComponent<T>;
+  eachAs: FC<DtoUiComponentProps<T> & Props>;
 }
 export type LazyDtoUiArrayGeneratorProps<T extends Entity> = Omit<
   LazyDtoComponentWrapperProps<T>,
@@ -137,3 +146,22 @@ export interface LazyDtoComponentWrapperProps<T extends Entity> {
   entityClass: string;
   whileLoading: () => ReactNode;
 }
+
+export interface DtoStoreParams {
+  id: Identifier;
+  entityClass: string;
+  listenerKey?: string;
+}
+
+export interface DtoStoreReturn<T> {
+  entity: T;
+  deleted: boolean;
+  dispatchDeletion: React.Dispatch<
+    React.SetStateAction<Array<string | number>>
+  >;
+  dispatchWithoutControl: React.Dispatch<React.SetStateAction<T>>;
+}
+
+export type LazyDtoStoreReturn<T> = Partial<
+  Pick<DtoStoreReturn<T | undefined>, "entity" | "dispatchWithoutControl">
+>;

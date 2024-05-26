@@ -1,36 +1,30 @@
 "use client";
 
-import { DtoUiComponent, Entity } from "../../types";
-import React from "react";
-import { useDtoStoreDispatchAndListener } from "../../hooks/main";
-import { useDtoStoreDelete } from "../../hooks/main";
+import { DtoUiComponentProps, Entity } from "../../types";
+import React, { FC } from "react";
+import { useDtoStore } from "../../hooks/main";
 
-export function DtoComponentWrapper<T extends Entity>({
+export function DtoComponentWrapper<T extends Entity, Props>({
   entityClass,
   id,
   uiComponent: UiComponent,
+  ...props
 }: {
   entityClass: string;
   id: string | number;
-  uiComponent?: DtoUiComponent<T>;
-}) {
-  const { currentState, dispatchWithoutControl } =
-    useDtoStoreDispatchAndListener<T>(
-      id,
-      entityClass,
-      UiComponent?.name || "component",
-    );
-  const { dispatchDeletion, deleted } = useDtoStoreDelete(entityClass, id);
+  uiComponent: FC<DtoUiComponentProps<T> & Props>;
+} & Props &
+  React.JSX.IntrinsicAttributes) {
+  const storeProps = useDtoStore<T>({
+    id,
+    entityClass,
+  });
 
-  return (
-    UiComponent && (
-      <UiComponent
-        entity={currentState}
-        entityClass={entityClass}
-        dispatchWithoutControl={dispatchWithoutControl}
-        deleted={deleted}
-        dispatchDeletion={dispatchDeletion}
-      />
-    )
-  );
+  const finalProps = {
+    entityClass,
+    ...storeProps,
+    ...props,
+  } as DtoUiComponentProps<T> & Props & React.JSX.IntrinsicAttributes;
+
+  return UiComponent && <UiComponent {...finalProps} />;
 }

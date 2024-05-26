@@ -1,35 +1,34 @@
 "use client";
 import { Entity, LazyDtoComponentWrapperProps } from "../../types";
-import {
-  useDtoStoreDelete,
-  useLazyDtoDispatchAndListen,
-} from "../../hooks/main";
-import React, { Dispatch, SetStateAction } from "react";
 
-export function LazyDtoComponentWrapper<T extends Entity>({
+import React, { Dispatch, SetStateAction } from "react";
+import { useLazyDtoStore } from "../../hooks/main";
+
+export function LazyDtoComponentWrapper<T extends Entity, Props>({
   renderAs: Component,
   id,
   entityClass,
   whileLoading: Loading,
-}: LazyDtoComponentWrapperProps<T>) {
+  ...props
+}: LazyDtoComponentWrapperProps<T> & Props) {
   const listenerKey = `${entityClass}:${id}:ui-wrapper`;
-  const { currentState, dispatchWithoutControl } =
-    useLazyDtoDispatchAndListen<T>(id, entityClass, listenerKey);
+  const { entity, dispatchWithoutControl } = useLazyDtoStore<T>(
+    id,
+    entityClass,
+    listenerKey,
+  );
 
-  const deletionProps = useDtoStoreDelete(entityClass, id, listenerKey);
-
-  if (currentState === undefined) {
+  if (entity === undefined || dispatchWithoutControl === undefined) {
     return <Loading />;
   } else {
     return (
       <Component
-        entity={currentState}
         entityClass={entityClass}
-        {...deletionProps}
+        entity={entity}
         dispatchWithoutControl={
-          // cast the dispatch because we already handled the undefined case.
           dispatchWithoutControl as Dispatch<SetStateAction<T>>
         }
+        {...props}
       />
     );
   }

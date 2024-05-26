@@ -1,42 +1,34 @@
-import { Entity, LazyDtoUiComponent } from "../../../types";
-import { useDtoStoreDelete, useLazyDtoDispatchAndListen } from "../index";
-import React, {
-  Dispatch,
-  memo,
-  ReactNode,
-  SetStateAction,
-  useCallback,
-} from "react";
+import { Entity, Identifier, LazyDtoUiComponentProps } from "../../../types";
 
-export function useLazyDtoComponent<T extends Entity>(
-  Component: LazyDtoUiComponent<T>,
+import React, { FC, memo, ReactNode, useCallback } from "react";
+import { useLazyDtoStore } from "../store/useLazyDtoStore";
+
+export function useLazyDtoComponent<T extends Entity, Props>(
+  Component: FC<LazyDtoUiComponentProps<T> & Props>,
   entityClass: string,
   Loading: () => ReactNode,
-) {
+): FC<Entity & Props> {
   return useCallback(
-    memo(({ id }: { id: string | number }) => {
+    ({ id, ...props }: { id: Identifier } & Props) => {
       const listenerKey = `${entityClass}:${id}:ui-wrapper`;
-      const { currentState, dispatchWithoutControl } =
-        useLazyDtoDispatchAndListen<T>(id, entityClass, listenerKey);
+      const { entity, dispatchWithoutControl } = useLazyDtoStore<T>(
+        id,
+        entityClass,
+        listenerKey,
+      );
 
-      const deletionProps = useDtoStoreDelete(entityClass, id, listenerKey);
-
-      if (currentState === undefined) {
+      if (entity === undefined || dispatchWithoutControl === undefined) {
         return <Loading />;
       } else {
-        return (
-          <Component
-            entity={currentState}
-            entityClass={entityClass}
-            {...deletionProps}
-            dispatchWithoutControl={
-              // cast the dispatch because we already handled the undefined case.
-              dispatchWithoutControl as Dispatch<SetStateAction<T>>
-            }
-          />
-        );
+        const finalProps = {
+          ...props,
+          entity,
+          dispatchWithoutControl,
+          entityClass,
+        } as Props & React.JSX.IntrinsicAttributes & LazyDtoUiComponentProps<T>;
+        return <Component {...finalProps} />;
       }
-    }),
+    },
     [entityClass],
   );
 }

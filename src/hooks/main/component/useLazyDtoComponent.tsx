@@ -1,5 +1,5 @@
-import { Entity, LazyDtoUiComponent } from "../../types";
-import { useDtoStoreDelete, useReferencedEntity } from "../../hooks/main";
+import { Entity, LazyDtoUiComponent } from "../../../types";
+import { useDtoStoreDelete, useLazyDtoDispatchAndListen } from "../index";
 import React, {
   Dispatch,
   memo,
@@ -16,11 +16,8 @@ export function useLazyDtoComponent<T extends Entity>(
   return useCallback(
     memo(({ id }: { id: string | number }) => {
       const listenerKey = `${entityClass}:${id}:ui-wrapper`;
-      const { currentState, dispatchWithoutControl } = useReferencedEntity<T>(
-        id,
-        entityClass,
-        listenerKey,
-      );
+      const { currentState, dispatchWithoutControl } =
+        useLazyDtoDispatchAndListen<T>(id, entityClass, listenerKey);
 
       const deletionProps = useDtoStoreDelete(entityClass, id, listenerKey);
 

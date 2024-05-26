@@ -1,5 +1,9 @@
+"use client";
 import { Entity, LazyDtoComponentWrapperProps } from "../../types";
-import { useDtoStoreDelete, useReferencedEntity } from "../../hooks/main";
+import {
+  useDtoStoreDelete,
+  useLazyDtoDispatchAndListen,
+} from "../../hooks/main";
 import React, { Dispatch, SetStateAction } from "react";
 
 export function LazyDtoComponentWrapper<T extends Entity>({
@@ -9,11 +13,8 @@ export function LazyDtoComponentWrapper<T extends Entity>({
   whileLoading: Loading,
 }: LazyDtoComponentWrapperProps<T>) {
   const listenerKey = `${entityClass}:${id}:ui-wrapper`;
-  const { currentState, dispatchWithoutControl } = useReferencedEntity<T>(
-    id,
-    entityClass,
-    listenerKey,
-  );
+  const { currentState, dispatchWithoutControl } =
+    useLazyDtoDispatchAndListen<T>(id, entityClass, listenerKey);
 
   const deletionProps = useDtoStoreDelete(entityClass, id, listenerKey);
 

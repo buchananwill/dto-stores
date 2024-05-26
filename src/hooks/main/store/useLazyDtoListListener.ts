@@ -1,10 +1,10 @@
 import { useGlobalDispatch, useGlobalListenerGroup } from "selective-context";
-import { EmptyArray, Entity } from "../../types";
+import { EmptyArray, Entity } from "../../../types";
 import { useEffect, useMemo } from "react";
 
 const initialMap = new Map<string, unknown>();
 
-export function useReferencedEntityListListener<T extends Entity>(
+export function useLazyDtoListListener<T extends Entity>(
   idList: (string | number)[],
   entityClass: string,
   listenerKey: string,

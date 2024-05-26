@@ -2,12 +2,12 @@ import {
   useGlobalDispatch,
   useGlobalDispatchAndListener,
 } from "selective-context";
-import { Entity } from "../../types";
+import { Entity } from "../../../types";
 import { useEffect } from "react";
-import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
-import { safeFunctionalSplice } from "../../functions/safeFunctionalSplice";
+import { getEntityNamespaceContextKey } from "../../../functions/name-space-keys/getEntityNamespaceContextKey";
+import { safeFunctionalSplice } from "../../../functions/safeFunctionalSplice";
 
-export function useReferencedEntity<T extends Entity>(
+export function useLazyDtoDispatchAndListen<T extends Entity>(
   id: string | number,
   entityClass: string,
   listenerKey: string,

@@ -1,5 +1,5 @@
 "use client";
-import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
+import { getEntityNamespaceContextKey } from "../../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalDispatch } from "selective-context";
 
 export function useDtoStoreDispatch<T>(

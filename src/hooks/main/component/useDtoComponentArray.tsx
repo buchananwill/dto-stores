@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { DtoUiComponent, Entity } from "../../types";
+import { DtoUiComponent, Entity } from "../../../types";
 import { useDtoComponent } from "./useDtoComponent"; // Adjust the import path as necessary
 
 export function useDtoComponentArray<T extends Entity>(

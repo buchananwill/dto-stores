@@ -1,4 +1,4 @@
-import {
+import React, {
   Dispatch,
   FC,
   MutableRefObject,
@@ -82,6 +82,8 @@ export interface UnsavedChangesProps {
   unsavedFlag: boolean;
   handleCommit: () => void;
 }
+
+export type DispatchList<T> = React.Dispatch<React.SetStateAction<T[]>>;
 
 export interface DtoUiComponentProps<T extends Entity>
   extends PropsWithChildren {

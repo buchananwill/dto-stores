@@ -1,11 +1,8 @@
 "use client";
 
-import { DtoUiComponent, Entity } from "../../types";
+import { DtoUiComponent, Entity } from "../../../types";
 import React, { memo, useCallback } from "react";
-import {
-  useDtoStoreDelete,
-  useDtoStoreDispatchAndListener,
-} from "../../hooks/main";
+import { useDtoStoreDelete, useDtoStoreDispatchAndListener } from "../index";
 
 export function useDtoComponent<T extends Entity>(
   entityClass: string,

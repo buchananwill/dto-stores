@@ -1,8 +1,9 @@
+"use client";
 import { EditAddDeleteController } from "../controllers";
 import { HasIdClass, PrimaryDtoControllerArrayProps } from "../../types";
 import React from "react";
 import { DtoControllerArray } from "./DtoControllerArray";
-import { useMasterListControllerAddDelete } from "../../hooks/internal/useMasterListControllerAddDelete";
+import { useMasterListControllerAddDelete } from "../../hooks/internal";
 
 export function EditAddDeleteDtoControllerArray<
   T extends HasIdClass<U>,

@@ -1,8 +1,8 @@
 import { useGlobalListener } from "selective-context";
-import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { KEY_TYPES } from "../../literals";
+import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpacedKey";
+import { KEY_TYPES } from "../../../literals";
 
-import { DtoUiComponent, Entity } from "../../types";
+import { DtoUiComponent, Entity } from "../../../types";
 import { useLazyDtoComponentArray } from "./useLazyDtoComponentArray";
 import { ReactNode } from "react"; // Adjust the import path as necessary
 

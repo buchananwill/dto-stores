@@ -20,6 +20,10 @@ export interface HasIdClass<U> {
   id: U;
 }
 
+export interface DtoComponentProps {
+  entityId: Identifier;
+}
+
 // Data control types
 export interface DtoControllerProps<T extends Entity> {
   dto: T;
@@ -101,7 +105,7 @@ export type ContextNamespace = (typeof KEY_TYPES)[keyof typeof KEY_TYPES];
 // Data Access Types
 
 export interface DtoStoreParams {
-  id: Identifier;
+  entityId: Identifier;
   entityClass: string;
   listenerKey?: string;
 }
@@ -119,8 +123,7 @@ export type LazyDtoStoreReturn<T> = Partial<
 
 // UI Types
 
-export interface DtoUiComponentProps<T extends Entity>
-  extends PropsWithChildren {
+export interface BaseDtoUiProps<T extends Entity> extends PropsWithChildren {
   entity: T;
   entityClass: string;
   dispatchWithoutControl?: Dispatch<SetStateAction<T>>;
@@ -128,42 +131,47 @@ export interface DtoUiComponentProps<T extends Entity>
   dispatchDeletion?: Dispatch<SetStateAction<Identifier[]>>;
 }
 
-export type DtoUiComponent<T extends Entity, Props> = FC<
-  DtoUiComponentProps<T> & Props
->;
+export type DtoUiProps<T extends Entity, Props> = BaseDtoUiProps<T> &
+  Exclude<Props, BaseDtoUiProps<T>>;
 
-export type DtoComponentWrapperProps<T extends Entity, Props> = {
+export type DtoUi<T extends Entity, Props> = FC<DtoUiProps<T, Props>>;
+
+export type DtoUiWrapperProps<T extends Entity, Props> = {
   entityClass: string;
-  id: string | number;
-  renderAs: DtoUiComponent<T, Props>;
-} & Props;
+  entityId: string | number;
+  renderAs: DtoUi<T, Props>;
+} & Exclude<Props, BaseDtoUiProps<T>>;
 
-export type DtoUiArrayGeneratorProps<T extends Entity, Props> = Omit<
-  DtoComponentWrapperProps<T, Props>,
-  "id"
+export type DtoUiArrayProps<T extends Entity, Props> = Pick<
+  DtoUiWrapperProps<T, Props>,
+  "entityClass" | "renderAs"
+> &
+  Exclude<Props, BaseDtoUiProps<T>>;
+
+export type BaseLazyDtoUiProps<T extends Entity> = Pick<
+  BaseDtoUiProps<T>,
+  "entity" | "entityClass" | "dispatchWithoutControl" | "children"
 >;
 
-export type LazyDtoUiComponentProps<T extends Entity> = Omit<
-  DtoUiComponentProps<T>,
-  "deleted" | "dispatchDeletion"
+export type LazyDtoUiProps<T extends Entity, Props> = BaseLazyDtoUiProps<T> &
+  Exclude<Props, BaseLazyDtoUiProps<T>>;
+
+export type LazyDtoUi<T extends Entity, Props> = FC<
+  BaseLazyDtoUiProps<T> & Exclude<Props, BaseLazyDtoUiProps<T>>
 >;
 
-export type LazyDtoUiComponent<T extends Entity, Props> = FC<
-  LazyDtoUiComponentProps<T> & Props
->;
-
-export type LazyDtoComponentWrapperProps<T extends Entity, Props> = {
-  renderAs: LazyDtoUiComponent<T, Props>;
-  id: string | number;
+export type LazyDtoUiWrapperProps<T extends Entity, Props> = {
+  renderAs: LazyDtoUi<T, Props>;
+  entityId: string | number;
   entityClass: string;
   whileLoading: () => ReactNode;
-} & Props;
+} & Exclude<Props, BaseLazyDtoUiProps<T>>;
 
-export type LazyDtoUiArrayGeneratorProps<T extends Entity, Props> = Omit<
-  LazyDtoComponentWrapperProps<T, Props>,
-  "id"
+export type LazyDtoUiArrayProps<T extends Entity, Props> = Pick<
+  LazyDtoUiWrapperProps<T, Props>,
+  "renderAs" | "whileLoading" | "entityClass"
 > &
-  Props;
+  Exclude<Props, BaseLazyDtoUiProps<T>>;
 
 export type UnsavedChangesToast = FC<UnsavedChangesProps>;
 

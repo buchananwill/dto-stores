@@ -1,11 +1,11 @@
 import React, { memo, useMemo } from "react";
 
-import { DtoUiComponentProps, Entity } from "../../../types";
-import { useDtoComponent } from "./useDtoComponent"; // Adjust the import path as necessary
+import { DtoUi, Entity } from "../../../types";
+import { useDtoComponent, UseDtoComponentReturnProps } from "./useDtoComponent"; // Adjust the import path as necessary
 
 export function useDtoComponentArray<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: React.FC<Props & DtoUiComponentProps<T>>,
+  UiComponent: DtoUi<T, Props>,
   idList: number[],
   sharedProps: Props,
 ) {
@@ -15,9 +15,13 @@ export function useDtoComponentArray<T extends Entity, Props>(
 
   return useMemo(
     () =>
-      idList.map((id) => (
-        <MemoComponent id={id} key={`${entityClass}:${id}`} {...sharedProps} />
-      )),
+      idList.map((id) => {
+        const finalProps = {
+          entityId: id,
+          ...sharedProps,
+        } as UseDtoComponentReturnProps<T, Props>;
+        return <MemoComponent key={`${entityClass}:${id}`} {...finalProps} />;
+      }),
     [idList, entityClass, sharedProps],
   );
 }

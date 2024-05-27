@@ -1,11 +1,11 @@
 import React, { FC, memo, ReactNode, useMemo } from "react";
 
-import { Entity, LazyDtoUiComponentProps } from "../../../types";
+import { Entity, BaseLazyDtoUiProps } from "../../../types";
 import { useLazyDtoComponent } from "./useLazyDtoComponent"; // Adjust the import path as necessary
 
 export function useLazyDtoComponentArray<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: FC<LazyDtoUiComponentProps<T> & Props>,
+  UiComponent: FC<BaseLazyDtoUiProps<T> & Props>,
   idList: number[],
   Loading: () => ReactNode,
   sharedProps: Props,

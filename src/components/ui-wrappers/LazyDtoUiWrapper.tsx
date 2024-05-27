@@ -1,23 +1,19 @@
 "use client";
-import {
-  Entity,
-  LazyDtoComponentWrapperProps,
-  LazyDtoUiComponentProps,
-} from "../../types";
+import { Entity, LazyDtoUiProps, LazyDtoUiWrapperProps } from "../../types";
 
 import React from "react";
 import { useLazyDtoStore } from "../../hooks/main";
 
-export function LazyDtoComponentWrapper<T extends Entity, Props>({
+export function LazyDtoUiWrapper<T extends Entity, Props>({
   renderAs: Component,
-  id,
+  entityId,
   entityClass,
   whileLoading: Loading,
   ...props
-}: LazyDtoComponentWrapperProps<T, Props>) {
-  const listenerKey = `${entityClass}:${id}:ui-wrapper`;
+}: LazyDtoUiWrapperProps<T, Props>) {
+  const listenerKey = `${entityClass}:${entityId}:ui-wrapper`;
   const { entity, dispatchWithoutControl } = useLazyDtoStore<T>(
-    id,
+    entityId,
     entityClass,
     listenerKey,
   );
@@ -30,7 +26,7 @@ export function LazyDtoComponentWrapper<T extends Entity, Props>({
       entity,
       dispatchWithoutControl,
       ...props,
-    } as LazyDtoUiComponentProps<T> & Props;
+    } as LazyDtoUiProps<T, Props>;
 
     return <Component {...finalProps} />;
   }

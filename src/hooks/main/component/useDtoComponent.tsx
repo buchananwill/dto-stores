@@ -1,18 +1,32 @@
 "use client";
 
-import { DtoUiComponentProps, Entity, Identifier } from "../../../types";
+import {
+  DtoComponentProps,
+  DtoUi,
+  BaseDtoUiProps,
+  Entity,
+} from "../../../types";
 import React, { FC, useCallback } from "react";
 import { useDtoStore } from "../store/useDtoStore";
 
+export type UseDtoComponentReturnProps<T extends Entity, Props> = Exclude<
+  Props,
+  BaseDtoUiProps<T>
+> &
+  DtoComponentProps;
+
 export function useDtoComponent<T extends Entity, Props>(
   entityClass: string,
-  uiComponent: React.FC<Props & DtoUiComponentProps<T>>,
-): FC<Props & Entity> {
+  uiComponent: DtoUi<T, Props>,
+): FC<UseDtoComponentReturnProps<T, Props>> {
   return useCallback(
-    ({ id, ...props }: { id: Identifier } & Props) => {
+    ({
+      entityId,
+      ...props
+    }: DtoComponentProps & Omit<Props, keyof BaseDtoUiProps<T>>) => {
       const listenerKey = uiComponent?.name || "component";
       const entityProps = useDtoStore<T>({
-        id,
+        entityId,
         entityClass,
         listenerKey,
       });
@@ -22,7 +36,7 @@ export function useDtoComponent<T extends Entity, Props>(
       const finalProps = {
         ...entityProps,
         ...props,
-      } as Props & React.JSX.IntrinsicAttributes & DtoUiComponentProps<T>;
+      } as Props & React.JSX.IntrinsicAttributes & BaseDtoUiProps<T>;
 
       return <UiComponent {...finalProps} />;
     },

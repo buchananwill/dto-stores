@@ -2,13 +2,13 @@ import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpacedKey";
 import { KEY_TYPES } from "../../../literals";
 
-import { Entity, LazyDtoUiComponentProps } from "../../../types";
+import { Entity, BaseLazyDtoUiProps } from "../../../types";
 import { useLazyDtoComponentArray } from "./useLazyDtoComponentArray";
 import { FC, ReactNode } from "react"; // Adjust the import path as necessary
 
 export function useLazyAllDtoComponents<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: FC<LazyDtoUiComponentProps<T> & Props>,
+  UiComponent: FC<BaseLazyDtoUiProps<T> & Props>,
   Loading: () => ReactNode,
   listenerKey = "dtoComponentArrayGenerator",
   sharedProps?: Props,

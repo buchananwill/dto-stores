@@ -1,21 +1,17 @@
 "use client";
 
-import {
-  DtoComponentWrapperProps,
-  DtoUiComponentProps,
-  Entity,
-} from "../../types";
+import { DtoUiProps, DtoUiWrapperProps, Entity } from "../../types";
 import React from "react";
 import { useDtoStore } from "../../hooks/main";
 
-export function DtoComponentWrapper<T extends Entity, Props>({
+export function DtoUiWrapper<T extends Entity, Props>({
   entityClass,
-  id,
+  entityId,
   renderAs: UiComponent,
   ...props
-}: DtoComponentWrapperProps<T, Props>) {
+}: DtoUiWrapperProps<T, Props>) {
   const storeProps = useDtoStore<T>({
-    id,
+    entityId: entityId,
     entityClass,
   });
 
@@ -23,7 +19,7 @@ export function DtoComponentWrapper<T extends Entity, Props>({
     entityClass,
     ...storeProps,
     ...props,
-  } as DtoUiComponentProps<T> & Props & React.JSX.IntrinsicAttributes;
+  } as DtoUiProps<T, Props>;
 
   return UiComponent && <UiComponent {...finalProps} />;
 }

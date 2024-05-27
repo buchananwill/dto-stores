@@ -4,19 +4,19 @@ import { useDtoStoreDelete } from "./useDtoStoreDelete";
 import { useRef } from "react";
 
 export function useDtoStore<T extends Entity>({
-  id,
+  entityId,
   entityClass,
   listenerKey,
 }: DtoStoreParams): DtoStoreReturn<T> {
   const listenerKeyRef = useRef(listenerKey ?? crypto.randomUUID());
 
   const { currentState: entity, ...other } = useDtoStoreDispatchAndListener<T>(
-    id,
+    entityId,
     entityClass,
     listenerKeyRef.current,
   );
   const dtoStoreDelete = useDtoStoreDelete(
-    id,
+    entityId,
     entityClass,
     listenerKeyRef.current,
   );

@@ -2,14 +2,13 @@ import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpacedKey";
 import { KEY_TYPES } from "../../../literals";
 
-import { DtoUiComponentProps, Entity } from "../../../types";
+import { DtoUi, BaseDtoUiProps, Entity } from "../../../types";
 import { useDtoComponentArray } from "./useDtoComponentArray";
-import React from "react"; // Adjust the import path as necessary
 
 export function useAllDtoComponents<T extends Entity, Props>(
   entityClass: string,
-  UiComponent: React.FC<Props & DtoUiComponentProps<T>>,
-  sharedProps?: Props,
+  UiComponent: DtoUi<T, Props>,
+  sharedProps?: Exclude<Props, BaseDtoUiProps<T>>,
 ) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState: idList } = useGlobalListener<number[]>({

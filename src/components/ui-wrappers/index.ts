@@ -1,2 +1,2 @@
-export { DtoComponentWrapper } from "./DtoComponentWrapper";
-export { LazyDtoComponentWrapper } from "./LazyDtoComponentWrapper";
+export { DtoUiWrapper } from "./DtoUiWrapper";
+export { LazyDtoUiWrapper } from "./LazyDtoUiWrapper";

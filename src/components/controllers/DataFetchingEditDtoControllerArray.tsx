@@ -8,7 +8,7 @@ import {
 } from "../../types";
 import { DtoControllerArray } from "./DtoControllerArray";
 import { useMasterListFetchController } from "../../hooks/internal/useMasterListControllerFetch";
-import { EditController } from "../controllers/EditController";
+import { EditController } from "../internal/EditController";
 
 export function DataFetchingEditDtoControllerArray<
   T extends HasIdClass<U>,

@@ -11,14 +11,14 @@ export function DtoUiWrapper<T extends Entity, Props>({
   ...props
 }: DtoUiWrapperProps<T, Props>) {
   const storeProps = useDtoStore<T>({
-    entityId: entityId,
+    entityId,
     entityClass,
   });
 
   const finalProps = {
     entityClass,
-    ...storeProps,
     ...props,
+    ...storeProps,
   } as DtoUiProps<T, Props>;
 
   return UiComponent && <UiComponent {...finalProps} />;

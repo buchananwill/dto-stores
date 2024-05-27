@@ -1,13 +1,13 @@
 "use client";
 
 import { DtoUiArrayProps, DtoUiWrapperProps, Entity } from "../../types";
-import { DtoUiWrapper } from "../ui-wrappers";
+import { DtoUiWrapper } from "./index";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { EmptyArray, KEY_TYPES } from "../../literals";
 
-export function DtoUiArray<T extends Entity, Props>({
+export function DtoUiListAll<T extends Entity, Props>({
   entityClass,
   renderAs,
   ...props

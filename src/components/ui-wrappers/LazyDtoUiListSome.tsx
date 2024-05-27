@@ -2,30 +2,25 @@
 
 import {
   Entity,
+  Identifier,
   LazyDtoUiArrayProps,
   LazyDtoUiWrapperProps,
 } from "../../types";
-import { LazyDtoUiWrapper } from "../ui-wrappers";
+import { LazyDtoUiWrapper } from "./index";
 import React from "react";
 import { EmptyArray, KEY_TYPES } from "../../literals";
 import { NamespacedHooks } from "../../hooks/main";
 
-export function LazyDtoUiArray<T extends Entity, Props>({
+export function LazyDtoUiListSome<T extends Entity, Props>({
   entityClass,
+  entityIdList,
   renderAs,
   whileLoading,
   ...props
-}: LazyDtoUiArrayProps<T, Props>) {
-  const { currentState } = NamespacedHooks.useListen(
-    entityClass,
-    KEY_TYPES.ID_LIST,
-    "dtoComponentArrayGenerator",
-    EmptyArray,
-  );
-
+}: LazyDtoUiArrayProps<T, Props> & { entityIdList: Identifier[] }) {
   return (
     <>
-      {currentState.map((entityId: string | number) => {
+      {entityIdList.map((entityId: string | number) => {
         const finalProps = {
           whileLoading,
           renderAs,

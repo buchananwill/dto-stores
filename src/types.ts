@@ -179,3 +179,8 @@ export interface UnsavedChangesProps {
   unsavedFlag: boolean;
   handleCommit: () => void;
 }
+
+export type DtoUiWrapperListSomeProps<
+  T extends Entity,
+  Props,
+> = DtoUiArrayProps<T, Props> & { entityIdList: Identifier[] };

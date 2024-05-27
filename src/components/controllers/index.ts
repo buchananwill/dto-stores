@@ -1,4 +1,6 @@
-export { DtoController } from "./DtoController";
 export { MasterMapController } from "./MasterMapController";
-export { EditAddDeleteController } from "./EditAddDeleteController";
+export { DtoController } from "./DtoController";
+export { DtoControllerArray } from "./DtoControllerArray";
 export { MasterChangesController } from "./MasterChangesController";
+export { EditAddDeleteDtoControllerArray } from "./EditAddDeleteDtoControllerArray";
+export { DataFetchingEditDtoControllerArray } from "./DataFetchingEditDtoControllerArray";

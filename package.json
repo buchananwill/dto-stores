@@ -18,11 +18,11 @@
     "selective-context": "file:D:\\Coding\\selective-context"
   },
   "peerDependencies": {
-    "@types/react": "^18.2.78",
     "lodash": "^4.17.21",
     "react": "^18.3.1"
   },
   "devDependencies": {
+    "@types/react": "^18.2.78",
     "@babel/core": "^7.24.4",
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-react": "^7.24.1",

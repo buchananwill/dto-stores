@@ -1,15 +1,15 @@
 "use client";
 
-import { DtoUiArrayGeneratorProps, EmptyArray, Entity } from "../../types";
+import { DtoUiArrayGeneratorProps, Entity } from "../../types";
 import { DtoComponentWrapper } from "../ui-wrappers";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { KEY_TYPES } from "../../literals";
+import { EmptyArray, KEY_TYPES } from "../../literals";
 
 export function DtoComponentArray<T extends Entity, Props>({
   entityClass,
-  eachAs: WrappedComponent,
+  renderAs: WrappedComponent,
   ...props
 }: DtoUiArrayGeneratorProps<T, Props>) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
@@ -26,7 +26,7 @@ export function DtoComponentArray<T extends Entity, Props>({
           entityClass={entityClass}
           id={id}
           key={`${entityClass}:${id}`}
-          uiComponent={WrappedComponent}
+          renderAs={WrappedComponent}
           {...(props as Props)}
         />
       ))}

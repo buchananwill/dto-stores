@@ -1,8 +1,8 @@
 "use client";
-import { ObjectPlaceholder } from "../../../types";
 
 import { getEntityNamespaceContextKey } from "../../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalDispatchAndListener } from "selective-context";
+import { ObjectPlaceholder } from "../../../literals";
 
 /**
  * Does NOT  allow undefined for initial value: forces object placeholder

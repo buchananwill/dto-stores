@@ -9,25 +9,25 @@ import React, {
 import { SelectiveContextReadAll } from "selective-context/dist/types";
 import { KEY_TYPES } from "./literals";
 
+// Convenience Utilities
+export type Identifier = string | number;
+
 export interface Entity {
-  id: string | number;
+  id: Identifier;
 }
 
+export interface HasIdClass<U> {
+  id: U;
+}
+
+// Data control types
 export interface DtoControllerProps<T extends Entity> {
   dto: T;
   entityClass: string;
 }
 
-export const EmptyArray = [];
-export const ObjectPlaceholder = {};
-
 export interface DtoControllerArrayProps<T extends Entity> {
   dtoList: T[];
-  entityClass: string;
-}
-
-export interface IdListControllerProps<T extends Entity> {
-  entityList: T[];
   entityClass: string;
 }
 
@@ -44,13 +44,13 @@ export interface TrackChangesProps<T extends HasIdClass<U>, U> {
   postServerAction?: CommitServerAction<T>;
 }
 
-export interface ChangesTracker<U extends string | number> {
-  changedDtos: Array<U>;
-  dispatchChangesList: Dispatch<SetStateAction<Array<U>>>;
-  deletedDtos: Array<U>;
-  dispatchDeletionList: Dispatch<SetStateAction<Array<U>>>;
-  transientDtoIdList: Array<U>;
-  dispatchTransientList: Dispatch<SetStateAction<Array<U>>>;
+export interface ChangesTracker<U extends Identifier> {
+  changedDtos: U[];
+  dispatchChangesList: Dispatch<SetStateAction<U[]>>;
+  deletedDtos: U[];
+  dispatchDeletionList: Dispatch<SetStateAction<U[]>>;
+  transientDtoIdList: U[];
+  dispatchTransientList: Dispatch<SetStateAction<U[]>>;
   dispatchUnsavedFlag: Dispatch<
     SetStateAction<Map<string, MutableRefObject<() => Promise<void>>>>
   >;
@@ -76,45 +76,7 @@ export type CommitEditCallbackParams<
   | "dispatchChangesList"
 >;
 
-export type UnsavedChangesToast = FC<UnsavedChangesProps>;
-
-export interface UnsavedChangesProps {
-  unsavedFlag: boolean;
-  handleCommit: () => void;
-}
-
 export type DispatchList<T> = React.Dispatch<React.SetStateAction<T[]>>;
-
-export interface DtoUiComponentProps<T extends Entity>
-  extends PropsWithChildren {
-  entity: T;
-  entityClass: string;
-  dispatchWithoutControl?: Dispatch<SetStateAction<T>>;
-  deleted: boolean;
-  dispatchDeletion?: Dispatch<SetStateAction<(string | number)[]>>;
-}
-
-export type DtoUiComponent<T extends Entity> = FC<DtoUiComponentProps<T>>;
-
-export type Identifier = string | number;
-
-export type LazyDtoUiComponent<T extends Entity> = FC<
-  LazyDtoUiComponentProps<T>
->;
-
-export type LazyDtoUiComponentProps<T extends Entity> = Omit<
-  DtoUiComponentProps<T>,
-  "deleted" | "dispatchDeletion"
->;
-
-export interface DtoUiArrayGeneratorProps<T extends Entity, Props> {
-  entityClass: string;
-  eachAs: FC<DtoUiComponentProps<T> & Props>;
-}
-export type LazyDtoUiArrayGeneratorProps<T extends Entity> = Omit<
-  LazyDtoComponentWrapperProps<T>,
-  "id"
->;
 
 export type ChangesCallbackMap = Map<
   string,
@@ -125,13 +87,9 @@ export interface CommitServerAction<T> {
   (commitList: T[]): Promise<any>;
 }
 
-export interface HasIdClass<U> {
-  id: U;
-}
-
 export type PrimaryDtoControllerArrayProps<
   T extends HasIdClass<U>,
-  U extends string | number,
+  U extends Identifier,
 > = TrackChangesProps<T, U> & DtoControllerArrayProps<T>;
 
 export type EditControllerProps = Pick<
@@ -140,12 +98,7 @@ export type EditControllerProps = Pick<
 >;
 export type ContextNamespace = (typeof KEY_TYPES)[keyof typeof KEY_TYPES];
 
-export interface LazyDtoComponentWrapperProps<T extends Entity> {
-  renderAs: LazyDtoUiComponent<T>;
-  id: string | number;
-  entityClass: string;
-  whileLoading: () => ReactNode;
-}
+// Data Access Types
 
 export interface DtoStoreParams {
   id: Identifier;
@@ -156,12 +109,65 @@ export interface DtoStoreParams {
 export interface DtoStoreReturn<T> {
   entity: T;
   deleted: boolean;
-  dispatchDeletion: React.Dispatch<
-    React.SetStateAction<Array<string | number>>
-  >;
+  dispatchDeletion: React.Dispatch<React.SetStateAction<Identifier[]>>;
   dispatchWithoutControl: React.Dispatch<React.SetStateAction<T>>;
 }
 
 export type LazyDtoStoreReturn<T> = Partial<
   Pick<DtoStoreReturn<T | undefined>, "entity" | "dispatchWithoutControl">
 >;
+
+// UI Types
+
+export interface DtoUiComponentProps<T extends Entity>
+  extends PropsWithChildren {
+  entity: T;
+  entityClass: string;
+  dispatchWithoutControl?: Dispatch<SetStateAction<T>>;
+  deleted: boolean;
+  dispatchDeletion?: Dispatch<SetStateAction<Identifier[]>>;
+}
+
+export type DtoUiComponent<T extends Entity, Props> = FC<
+  DtoUiComponentProps<T> & Props
+>;
+
+export type DtoComponentWrapperProps<T extends Entity, Props> = {
+  entityClass: string;
+  id: string | number;
+  renderAs: DtoUiComponent<T, Props>;
+} & Props;
+
+export type DtoUiArrayGeneratorProps<T extends Entity, Props> = Omit<
+  DtoComponentWrapperProps<T, Props>,
+  "id"
+>;
+
+export type LazyDtoUiComponentProps<T extends Entity> = Omit<
+  DtoUiComponentProps<T>,
+  "deleted" | "dispatchDeletion"
+>;
+
+export type LazyDtoUiComponent<T extends Entity, Props> = FC<
+  LazyDtoUiComponentProps<T> & Props
+>;
+
+export type LazyDtoComponentWrapperProps<T extends Entity, Props> = {
+  renderAs: LazyDtoUiComponent<T, Props>;
+  id: string | number;
+  entityClass: string;
+  whileLoading: () => ReactNode;
+} & Props;
+
+export type LazyDtoUiArrayGeneratorProps<T extends Entity, Props> = Omit<
+  LazyDtoComponentWrapperProps<T, Props>,
+  "id"
+> &
+  Props;
+
+export type UnsavedChangesToast = FC<UnsavedChangesProps>;
+
+export interface UnsavedChangesProps {
+  unsavedFlag: boolean;
+  handleCommit: () => void;
+}

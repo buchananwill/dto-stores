@@ -1,18 +1,18 @@
 "use client";
 
-import { EmptyArray, Entity, LazyDtoUiArrayGeneratorProps } from "../../types";
+import { Entity, LazyDtoUiArrayGeneratorProps } from "../../types";
 import { LazyDtoComponentWrapper } from "../ui-wrappers";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { KEY_TYPES } from "../../literals";
+import { EmptyArray, KEY_TYPES } from "../../literals";
 
 export function LazyDtoComponentArray<T extends Entity, Props>({
   entityClass,
   renderAs: WrappedComponent,
   whileLoading,
   ...props
-}: LazyDtoUiArrayGeneratorProps<T>) {
+}: LazyDtoUiArrayGeneratorProps<T, Props>) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState } = useGlobalListener<number[]>({
     contextKey,

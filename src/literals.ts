@@ -8,3 +8,5 @@ export const KEY_TYPES = {
   MASTER_LIST: "masterList",
   MASTER_MAP: "masterMap",
 } as const;
+export const EmptyArray = [];
+export const ObjectPlaceholder = {};

@@ -1,8 +1,7 @@
-import { EmptyArray } from "../../../types";
 import { useMemo } from "react";
 import { useGlobalDispatchAndListener } from "selective-context";
 import { getNameSpacedKey } from "../../../functions/name-space-keys/getNameSpacedKey";
-import { KEY_TYPES } from "../../../literals";
+import { EmptyArray, KEY_TYPES } from "../../../literals";
 
 export function useDtoStoreDelete(
   id: string | number,

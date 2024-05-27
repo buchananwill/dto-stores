@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { EmptyArray } from "../../types";
 import {
   useGlobalController,
   useGlobalListener,
   useGlobalListenerGroup,
 } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { Controller, KEY_TYPES } from "../../literals";
+import { Controller, EmptyArray, KEY_TYPES } from "../../literals";
 
 export interface DtoGroupMapControllerProps {
   entityClass: string;

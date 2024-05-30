@@ -5,6 +5,8 @@ import { ArrayPlaceholder, useGlobalController } from "selective-context";
 import { DataFetchingProps, HasIdClass } from "../../types";
 import { Controller, KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
+import { isNotUndefined } from "../../functions/isNotUndefined";
+import { isNull, isNumber } from "lodash";
 
 export function useMasterListFetchController<T extends HasIdClass<U>, U>({
   entityClass,
@@ -31,8 +33,19 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
     async (newIdSet: Set<U>) => {
       isLoading.current = true;
       try {
-        let newItems = await getServerAction([...newIdSet.values()]);
-        dispatchMasterList((list) => [...list, ...newItems]);
+        const newIdList = [...newIdSet.values()].filter((id) => {
+          const isDefined = isNotUndefined(id) && !isNull(id);
+          if (isNumber(id)) return !isNaN(id);
+          else return isDefined;
+        });
+        if (newIdList.length !== 0) {
+          let newItems = await getServerAction(
+            [...newIdSet.values()].filter(
+              (id) => isNotUndefined(id) && !isNull(id),
+            ),
+          );
+          dispatchMasterList((list) => [...list, ...newItems]);
+        }
       } finally {
         isLoading.current = false;
       }

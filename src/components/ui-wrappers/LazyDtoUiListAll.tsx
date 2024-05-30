@@ -23,8 +23,6 @@ export function LazyDtoUiListAll<T extends Entity, Props>({
     EmptyArray,
   );
 
-  console.log(currentState);
-
   return (
     <>
       {[...new Set(currentState)].map((entityId: string | number) => {

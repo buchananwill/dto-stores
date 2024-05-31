@@ -24,9 +24,9 @@ export function EditAddDeleteController({
   });
 
   const hasChanges =
-    changedDtos.length > 0 ||
-    deletedDtos.length > 0 ||
-    transientDtoIdList.length > 0;
+    (changedDtos.length > 0 && !!serverActions.updateServerAction) ||
+    (deletedDtos.length > 0 && !!serverActions.deleteServerAction) ||
+    (transientDtoIdList.length > 0 && !!serverActions.postServerAction);
 
   useHasChangesFlagCallback(
     handleCommit,

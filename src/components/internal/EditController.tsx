@@ -1,22 +1,22 @@
 "use client";
 
 import { useGlobalReadAny } from "selective-context";
-import { EditControllerProps } from "../../types";
+import { EditControllerProps, HasIdClass, Identifier } from "../../types";
 import { useChangesTrackerControllers } from "../../hooks/internal/useChangesTrackerControllers";
 import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFlagCallback";
 import { useCommitEditCallback } from "../../hooks/internal/useCommitEditCallback";
 
-export function EditController({
+export function EditController<T extends HasIdClass<U>, U extends Identifier>({
   entityClass,
   updateServerAction,
-}: EditControllerProps) {
-  const changesTrackers = useChangesTrackerControllers(entityClass);
+}: EditControllerProps<T, U>) {
+  const changesTrackers = useChangesTrackerControllers<U>(entityClass);
   const { dispatchUnsavedFlag, changedDtos, deletedDtos, transientDtoIdList } =
     changesTrackers;
 
-  const selectiveContextReadAll = useGlobalReadAny();
+  const selectiveContextReadAll = useGlobalReadAny<T>();
 
-  const handleCommit = useCommitEditCallback({
+  const handleCommit = useCommitEditCallback<T, U>({
     ...changesTrackers,
     selectiveContextReadAll,
     entityClass,

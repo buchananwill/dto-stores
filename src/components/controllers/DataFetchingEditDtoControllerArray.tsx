@@ -18,7 +18,7 @@ export function DataFetchingEditDtoControllerArray<
   idList,
   getServerAction,
   updateServerAction,
-}: DataFetchingProps<T, U> & EditControllerProps) {
+}: DataFetchingProps<T, U> & EditControllerProps<T, U>) {
   const { masterList } = useMasterListFetchController({
     entityClass,
     idList,

@@ -9,7 +9,7 @@ import React, {
 import { SelectiveContextReadAll } from "selective-context/dist/types";
 import { KEY_TYPES } from "./literals";
 
-// Convenience Utilities
+// Convenience Types
 export type Identifier = string | number;
 
 export interface Entity {
@@ -94,10 +94,10 @@ export type PrimaryDtoControllerArrayProps<
   U extends Identifier,
 > = TrackChangesProps<T, U> & DtoControllerArrayProps<T>;
 
-export type EditControllerProps = Pick<
-  TrackChangesProps<never, Identifier>,
-  "entityClass" | "updateServerAction"
->;
+export type EditControllerProps<
+  T extends HasIdClass<U>,
+  U extends Identifier,
+> = Pick<TrackChangesProps<T, U>, "entityClass" | "updateServerAction">;
 export type ContextNamespace = (typeof KEY_TYPES)[keyof typeof KEY_TYPES];
 
 // Data Access Types

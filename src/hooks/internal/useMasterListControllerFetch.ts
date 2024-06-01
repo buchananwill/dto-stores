@@ -39,7 +39,7 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
           else return isDefined;
         });
         if (newIdList.length !== 0) {
-          let newItems = await getServerAction(
+          const newItems = await getServerAction(
             [...newIdSet.values()].filter(
               (id) => isNotUndefined(id) && !isNull(id),
             ),
@@ -60,7 +60,7 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
     const newIdSet = new Set<U>();
 
     // see if any new ids were added...
-    for (let newId of stateIdSet) {
+    for (const newId of stateIdSet) {
       if (!refIdSet.has(newId)) {
         newIdSet.add(newId);
       }
@@ -68,7 +68,7 @@ export function useMasterListFetchController<T extends HasIdClass<U>, U>({
 
     // see if any ids are no longer present...
     const notListenedIdSet = new Set<U>();
-    for (let id of refIdSet) {
+    for (const id of refIdSet) {
       if (!stateIdSet.has(id)) notListenedIdSet.add(id);
     }
 

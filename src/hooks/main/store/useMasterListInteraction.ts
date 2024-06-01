@@ -1,13 +1,13 @@
 import { useCallback } from "react";
-import { DispatchList } from "../../../types";
+import { DispatchList, Entity, Identifier } from "../../../types";
 import { KEY_TYPES } from "../../../literals";
 import { NamespacedHooks } from "./useNamespacedHooks";
 
-export function useMasterListInteraction(
+export function useMasterListInteraction<T extends Entity>(
   entityClass: string,
   callback: (
-    dispatchMasterList: DispatchList<any>,
-    dispatchAddedList: DispatchList<any>,
+    dispatchMasterList: DispatchList<T>,
+    dispatchAddedList: DispatchList<Identifier>,
   ) => void,
 ) {
   const dispatch = NamespacedHooks.useDispatch(

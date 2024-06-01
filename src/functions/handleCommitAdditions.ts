@@ -6,11 +6,11 @@ import { isNotUndefined } from "./isNotUndefined";
 
 export function handleCommitAdditions<T, U extends string | number>(
   postServerAction: undefined | CommitServerAction<T>,
-  transientDtoIdList: Array<U>,
-  deletedDtos: Array<U>,
+  transientDtoIdList: U[],
+  deletedDtos: U[],
   selectiveContextReadAll: SelectiveContextReadAll<T>,
   entityClass: string,
-  dispatchTransientList: Dispatch<SetStateAction<Array<U>>>,
+  dispatchTransientList: Dispatch<SetStateAction<U[]>>,
 ) {
   if (postServerAction === undefined) {
     console.error("No server post action defined");

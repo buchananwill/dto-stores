@@ -1,15 +1,13 @@
-import { useDtoStoreDispatchAndListener } from "./useDtoStoreDispatchAndListener";
 import { Entity, Identifier, LazyDtoStoreReturn } from "../../../types";
-import { useDtoStoreDelete } from "./useDtoStoreDelete";
-import { useRef } from "react";
 import { useLazyDtoDispatchAndListen } from "./useLazyDtoDispatchAndListen";
+import { useUuidListenerKeyFallback } from "../../util/useUuidListenerKeyFallback";
 
 export function useLazyDtoStore<T extends Entity>(
   id: Identifier,
   entityClass: string,
   listenerKey?: string,
 ): LazyDtoStoreReturn<T> {
-  const listenerKeyRef = useRef(listenerKey ?? crypto.randomUUID());
+  const listenerKeyRef = useUuidListenerKeyFallback(listenerKey);
 
   const dtoStoreDispatchAndListener = useLazyDtoDispatchAndListen<T>(
     id,

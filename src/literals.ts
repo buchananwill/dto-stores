@@ -10,3 +10,4 @@ export const KEY_TYPES = {
 } as const;
 export const EmptyArray = [];
 export const ObjectPlaceholder = {};
+export const InitialMap = new Map<string, unknown>();

@@ -7,13 +7,11 @@ import {
   useGlobalListenerGroup,
 } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { Controller, EmptyArray, KEY_TYPES } from "../../literals";
+import { Controller, EmptyArray, InitialMap, KEY_TYPES } from "../../literals";
 
 export interface DtoGroupMapControllerProps {
   entityClass: string;
 }
-
-const initialMap = new Map();
 
 export function MasterMapController({
   entityClass,
@@ -33,10 +31,10 @@ export function MasterMapController({
   const { currentState: entityMap } = useGlobalListenerGroup({
     contextKeys,
     listenerKey: listenerKey,
-    initialValue: initialMap,
+    initialValue: InitialMap,
   });
 
-  let { dispatch } = useGlobalController({
+  const { dispatch } = useGlobalController({
     contextKey: getNameSpacedKey(entityClass, KEY_TYPES.MASTER_MAP),
     listenerKey: Controller,
     initialValue: entityMap,

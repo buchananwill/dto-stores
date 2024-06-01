@@ -1,5 +1,5 @@
 import { SetStateAction, useCallback } from "react";
-import { useGlobalReadAny, useGlobalWriteAny } from "selective-context";
+import { useGlobalWriteAny } from "selective-context";
 import { Identifier } from "../../../types";
 import { getEntityNamespaceContextKey } from "../../../functions/name-space-keys/getEntityNamespaceContextKey";
 

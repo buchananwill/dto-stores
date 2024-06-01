@@ -37,6 +37,7 @@ function useDispatchAndListen<T>(
   });
 }
 
+// noinspection JSUnusedGlobalSymbols
 export const NamespacedHooks = {
   useDispatch,
   useListen,

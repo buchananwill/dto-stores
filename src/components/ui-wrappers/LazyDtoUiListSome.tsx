@@ -8,8 +8,6 @@ import {
 } from "../../types";
 import { LazyDtoUiWrapper } from "./index";
 import React from "react";
-import { EmptyArray, KEY_TYPES } from "../../literals";
-import { NamespacedHooks } from "../../hooks/main";
 
 export function LazyDtoUiListSome<T extends Entity, Props>({
   entityClass,

@@ -7,7 +7,7 @@ import {
 } from "react";
 
 export function useHasChangesFlagCallback(
-  handleCommit: { (): Promise<void> },
+  handleCommit: () => Promise<void>,
   hasChanges: boolean,
   dispatchUnsavedFlag: Dispatch<
     SetStateAction<Map<string, MutableRefObject<() => Promise<void>>>>

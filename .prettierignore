@@ -1,0 +1,9 @@
+# Ignore artifacts:
+dist
+coverage
+
+# Ignore non code:
+graphs
+
+# Ignore external libs:
+node_modules

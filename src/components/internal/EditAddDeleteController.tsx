@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalReadAny } from "selective-context";
-import { TrackChangesProps } from "../../types";
+import { Identifier, TrackChangesProps } from "../../types";
 import { useCommitAddDeleteEditCallback } from "../../hooks/internal/useCommitAddDeleteEditCallback";
 import { useChangesTrackerControllers } from "../../hooks/internal/useChangesTrackerControllers";
 import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFlagCallback";
@@ -9,12 +9,12 @@ import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFla
 export function EditAddDeleteController({
   entityClass,
   ...serverActions
-}: TrackChangesProps<any, any>) {
+}: TrackChangesProps<never, Identifier>) {
   const changesTrackers = useChangesTrackerControllers(entityClass);
   const { dispatchUnsavedFlag, changedDtos, deletedDtos, transientDtoIdList } =
     changesTrackers;
 
-  const selectiveContextReadAll = useGlobalReadAny();
+  const selectiveContextReadAll = useGlobalReadAny<never>();
 
   const handleCommit = useCommitAddDeleteEditCallback({
     ...changesTrackers,

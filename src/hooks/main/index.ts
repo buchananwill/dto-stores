@@ -1,5 +1,7 @@
 export { useDtoStoreDispatch } from "./store/useDtoStoreDispatch";
 export { useDtoStore } from "./store/useDtoStore";
+export { useReadAnyDto } from "./store/useReadAnyDto";
+export { useWriteAnyDto } from "./store/useWriteAnyDto";
 export { useLazyDtoStore } from "./store/useLazyDtoStore";
 export { useLazyDtoListListener } from "./store/useLazyDtoListListener";
 export { useDtoComponent } from "./component/useDtoComponent";

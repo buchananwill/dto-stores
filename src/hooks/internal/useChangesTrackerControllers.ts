@@ -29,7 +29,7 @@ export function useChangesTrackerControllers<U extends string | number>(
 
   const { dispatchWithoutListen: dispatchUnsavedFlag } =
     useGlobalDispatch<ChangesCallbackMap>("unsavedChanges");
-  return <ChangesTracker<U>>{
+  return {
     changedDtos,
     dispatchChangesList,
     deletedDtos,
@@ -37,5 +37,5 @@ export function useChangesTrackerControllers<U extends string | number>(
     transientDtoIdList,
     dispatchTransientList,
     dispatchUnsavedFlag,
-  };
+  } as ChangesTracker<U>;
 }

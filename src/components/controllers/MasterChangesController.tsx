@@ -2,18 +2,17 @@
 import { ChangesCallbackMap, UnsavedChangesToast } from "../../types";
 import { useGlobalController } from "selective-context";
 import React, { useCallback } from "react";
-
-const unsavedCallbackMap = new Map();
+import { InitialMap } from "../../literals";
 
 export function MasterChangesController({
   unsavedChangesToast: UnsavedChanges,
 }: {
   unsavedChangesToast: UnsavedChangesToast;
 }) {
-  let { currentState } = useGlobalController<ChangesCallbackMap>({
+  const { currentState } = useGlobalController<ChangesCallbackMap>({
     contextKey: "unsavedChanges",
     listenerKey: "controller",
-    initialValue: unsavedCallbackMap,
+    initialValue: InitialMap as Map<string, never>,
   });
 
   const handleCommit = useCallback(() => {

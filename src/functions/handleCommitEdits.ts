@@ -4,10 +4,10 @@ import { getEntityNamespaceContextKey } from "./name-space-keys/getEntityNamespa
 import { isNotUndefined } from "./isNotUndefined";
 
 export function handleCommitEdits<T, U extends string | number>(
-  changedDtos: Array<U>,
-  selectiveContextReadAll: { (contextKey: string): undefined | T },
+  changedDtos: U[],
+  selectiveContextReadAll: (contextKey: string) => undefined | T,
   entityClass: string,
-  dispatchChangesList: Dispatch<SetStateAction<Array<U>>>,
+  dispatchChangesList: Dispatch<SetStateAction<U[]>>,
   updateServerAction?: CommitServerAction<T>,
 ) {
   if (updateServerAction === undefined) {

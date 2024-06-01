@@ -1,6 +1,6 @@
-import { Entity, Identifier, BaseLazyDtoUiProps } from "../../../types";
+import { BaseLazyDtoUiProps, Entity, Identifier } from "../../../types";
 
-import React, { FC, memo, ReactNode, useCallback } from "react";
+import React, { FC, ReactNode, useCallback } from "react";
 import { useLazyDtoStore } from "../store/useLazyDtoStore";
 
 export function useLazyDtoComponent<T extends Entity, Props>(

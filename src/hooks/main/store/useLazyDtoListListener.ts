@@ -1,15 +1,16 @@
 import { useGlobalDispatch, useGlobalListenerGroup } from "selective-context";
 import { Entity } from "../../../types";
-import { useEffect, useMemo } from "react";
-import { EmptyArray } from "../../../literals";
-
-const initialMap = new Map<string, unknown>();
+import { useEffect, useMemo, useRef } from "react";
+import { EmptyArray, InitialMap, KEY_TYPES } from "../../../literals";
+import { NamespacedHooks } from "./useNamespacedHooks";
 
 export function useLazyDtoListListener<T extends Entity>(
   idList: (string | number)[],
   entityClass: string,
-  listenerKey: string,
+  listenerKey?: string,
 ) {
+  const listenerKeyRef = useRef(listenerKey ?? crypto.randomUUID());
+  NamespacedHooks.useDispatch(entityClass, KEY_TYPES.ID_LIST);
   const { dispatchWithoutListen } = useGlobalDispatch(`${entityClass}:idList`);
 
   const referencedIdContextKeys = useMemo(
@@ -19,8 +20,8 @@ export function useLazyDtoListListener<T extends Entity>(
 
   const { currentState } = useGlobalListenerGroup({
     contextKeys: referencedIdContextKeys,
-    listenerKey,
-    initialValue: initialMap as Map<string, T>,
+    listenerKey: listenerKeyRef.current,
+    initialValue: InitialMap as Map<string, T>,
   });
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export function useLazyDtoListListener<T extends Entity>(
     return () => {
       dispatchWithoutListen((list: (string | number)[]) => {
         let newList = [...list];
-        for (let idListElement of idList) {
+        for (const idListElement of idList) {
           const indexFirst = list.findIndex((item) => item === idListElement);
           if (indexFirst >= 0) newList = list.slice().splice(indexFirst, 1);
         }

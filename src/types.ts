@@ -87,9 +87,7 @@ export type ChangesCallbackMap = Map<
   MutableRefObject<() => Promise<void>>
 >;
 
-export interface CommitServerAction<T> {
-  (commitList: T[]): Promise<any>;
-}
+export type CommitServerAction<T> = (commitList: T[]) => Promise<unknown>;
 
 export type PrimaryDtoControllerArrayProps<
   T extends HasIdClass<U>,
@@ -97,7 +95,7 @@ export type PrimaryDtoControllerArrayProps<
 > = TrackChangesProps<T, U> & DtoControllerArrayProps<T>;
 
 export type EditControllerProps = Pick<
-  TrackChangesProps<any, any>,
+  TrackChangesProps<never, Identifier>,
   "entityClass" | "updateServerAction"
 >;
 export type ContextNamespace = (typeof KEY_TYPES)[keyof typeof KEY_TYPES];

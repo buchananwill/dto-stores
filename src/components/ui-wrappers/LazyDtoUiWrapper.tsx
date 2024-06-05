@@ -11,11 +11,9 @@ export function LazyDtoUiWrapper<T extends Entity, Props>({
   whileLoading: Loading,
   ...props
 }: LazyDtoUiWrapperProps<T, Props>) {
-  const listenerKey = `${entityClass}:${entityId}:ui-wrapper`;
   const { entity, dispatchWithoutControl } = useLazyDtoStore<T>(
     entityId,
     entityClass,
-    listenerKey,
   );
 
   if (entity === undefined || dispatchWithoutControl === undefined) {

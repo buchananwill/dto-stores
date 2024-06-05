@@ -1,11 +1,17 @@
 "use client";
 
-import { DtoUiArrayProps, DtoUiWrapperProps, Entity } from "../../types";
+import {
+  DtoUiArrayProps,
+  DtoUiWrapperProps,
+  Entity,
+  Identifier,
+} from "../../types";
 import { DtoUiWrapper } from "./index";
 import React from "react";
 import { useGlobalListener } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { EmptyArray, KEY_TYPES } from "../../literals";
+import { useUuidListenerKeyFallback } from "../../hooks/util/useUuidListenerKeyFallback";
 
 export function DtoUiListAll<T extends Entity, Props>({
   entityClass,
@@ -13,9 +19,10 @@ export function DtoUiListAll<T extends Entity, Props>({
   ...props
 }: DtoUiArrayProps<T, Props>) {
   const contextKey = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
-  const { currentState } = useGlobalListener<number[]>({
+  const listenerKey = useUuidListenerKeyFallback().current;
+  const { currentState } = useGlobalListener<Identifier[]>({
     contextKey,
-    listenerKey: "dtoComponentArrayGenerator",
+    listenerKey,
     initialValue: EmptyArray,
   });
 

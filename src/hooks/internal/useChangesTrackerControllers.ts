@@ -1,6 +1,6 @@
 import { useGlobalController, useGlobalDispatch } from "selective-context";
 import { ChangesCallbackMap, ChangesTracker } from "../../types";
-import { Controller, EmptyArray, KEY_TYPES } from "../../literals";
+import { EmptyArray, KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { getControllerListenerKey } from "./useMasterListControllerAddDelete";
 

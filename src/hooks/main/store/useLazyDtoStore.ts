@@ -9,11 +9,9 @@ export function useLazyDtoStore<T extends Entity>(
 ): LazyDtoStoreReturn<T> {
   const listenerKeyRef = useUuidListenerKeyFallback(listenerKey);
 
-  const dtoStoreDispatchAndListener = useLazyDtoDispatchAndListen<T>(
+  return useLazyDtoDispatchAndListen<T>(
     id,
     entityClass,
     listenerKeyRef.current,
   );
-
-  return { ...dtoStoreDispatchAndListener };
 }

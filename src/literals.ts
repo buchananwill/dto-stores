@@ -7,6 +7,7 @@ export const KEY_TYPES = {
   ID_LIST: "idList",
   MASTER_LIST: "masterList",
   MASTER_MAP: "masterMap",
+  SELECTED: "selectedList",
 } as const;
 export const EmptyArray = [];
 export const ObjectPlaceholder = {};

@@ -12,6 +12,7 @@ import { KEY_TYPES } from "../../literals";
 export function DtoController<T extends Entity>({
   dto,
   entityClass,
+  mergeInitialWithProp,
 }: DtoControllerProps<T>) {
   const { currentState } = useDtoStoreController(dto, entityClass);
   const initialDtoRef = useRef<T>(dto);
@@ -19,6 +20,12 @@ export function DtoController<T extends Entity>({
   const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
     getNameSpacedKey(entityClass, KEY_TYPES.CHANGES),
   );
+
+  useEffect(() => {
+    if (mergeInitialWithProp) {
+      initialDtoRef.current = dto;
+    }
+  }, [dto]);
 
   useEffect(() => {
     const entityChanged = !isEqual(initialDtoRef.current, currentState);

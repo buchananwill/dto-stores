@@ -16,7 +16,7 @@ export interface Entity {
   id: Identifier;
 }
 
-export interface HasIdClass<U> {
+export interface HasIdClass<U extends Identifier> {
   id: U;
 }
 
@@ -28,20 +28,28 @@ export interface DtoComponentProps {
 export interface DtoControllerProps<T extends Entity> {
   dto: T;
   entityClass: string;
+  mergeInitialWithProp?: boolean;
 }
 
-export interface DtoControllerArrayProps<T extends Entity> {
+export type DtoControllerArrayProps<T extends Entity> = Omit<
+  DtoControllerProps<T>,
+  "dto"
+> & {
   dtoList: T[];
-  entityClass: string;
-}
+};
 
-export interface DataFetchingProps<T extends HasIdClass<U>, U> {
+export type DataFetchingProps<
+  T extends HasIdClass<U>,
+  U extends Identifier,
+> = Pick<DtoControllerProps<T>, "mergeInitialWithProp" | "entityClass"> & {
   idList: U[];
-  entityClass: string;
   getServerAction: (idList: U[]) => Promise<T[]>;
-}
+};
 
-export interface TrackChangesProps<T extends HasIdClass<U>, U> {
+export interface TrackChangesProps<
+  T extends HasIdClass<U>,
+  U extends Identifier,
+> {
   entityClass: string;
   updateServerAction?: CommitServerAction<T>;
   deleteServerAction?: CommitServerAction<U>;

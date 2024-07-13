@@ -10,7 +10,9 @@ import { Controller, KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { useEffectSyncDeepEqualWithDispatch } from "../util";
 
-const masterListListener = `masterList`;
+export function getControllerListenerKey(masterListContext: string) {
+  return `${masterListContext}${Controller}`;
+}
 
 /**
  * Maintains a list of all the loaded entities of a class, including transient ones.
@@ -20,11 +22,14 @@ export function useMasterListControllerAddDelete<
   T extends HasIdClass<U>,
   U extends string | number,
 >(entityList: T[], entityClass: string) {
-  const masterListListenerKey = `${entityClass}:${masterListListener}${Controller}`;
+  const masterListContext = getNameSpacedKey(
+    entityClass,
+    KEY_TYPES.MASTER_LIST,
+  );
   const { currentState: masterList, dispatch: dispatchMasterList } =
     useGlobalController({
-      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.MASTER_LIST),
-      listenerKey: Controller,
+      contextKey: masterListContext,
+      listenerKey: getControllerListenerKey(masterListContext),
       initialValue: entityList,
     });
 
@@ -32,29 +37,43 @@ export function useMasterListControllerAddDelete<
     return masterList.map((dto) => dto.id);
   }, [masterList]);
 
+  const idListContext = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
+
   const { dispatch } = useGlobalController({
-    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST),
-    listenerKey: Controller,
+    contextKey: idListContext,
+    listenerKey: getControllerListenerKey(idListContext),
     initialValue: idList,
   });
 
+  const selectedContext = getNameSpacedKey(entityClass, KEY_TYPES.SELECTED);
+
+  useGlobalController({
+    contextKey: selectedContext,
+    listenerKey: getControllerListenerKey(selectedContext),
+    initialValue: ArrayPlaceholder as U[],
+  });
+
   useEffectSyncDeepEqualWithDispatch(idList, dispatch);
+
+  const deletedContext = getNameSpacedKey(entityClass, KEY_TYPES.DELETED);
 
   const {
     currentState: deletedIdList,
     dispatchWithoutControl: dispatchDeletedList,
   } = useGlobalDispatchAndListener<U[]>({
-    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.DELETED),
-    listenerKey: masterListListenerKey,
+    contextKey: deletedContext,
+    listenerKey: getControllerListenerKey(deletedContext),
     initialValue: ArrayPlaceholder,
   });
+
+  const addedContext = getNameSpacedKey(entityClass, KEY_TYPES.ADDED);
 
   const {
     dispatchWithoutControl: dispatchTransientIdList,
     currentState: transientIdList,
   } = useGlobalDispatchAndListener<U[]>({
-    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ADDED),
-    listenerKey: masterListListenerKey,
+    contextKey: addedContext,
+    listenerKey: getControllerListenerKey(addedContext),
     initialValue: ArrayPlaceholder,
   });
 

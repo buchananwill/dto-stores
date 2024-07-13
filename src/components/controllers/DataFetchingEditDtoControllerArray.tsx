@@ -18,6 +18,7 @@ export function DataFetchingEditDtoControllerArray<
   idList,
   getServerAction,
   updateServerAction,
+  mergeInitialWithProp,
 }: DataFetchingProps<T, U> & EditControllerProps<T, U>) {
   const { masterList } = useMasterListFetchController({
     entityClass,
@@ -31,7 +32,11 @@ export function DataFetchingEditDtoControllerArray<
         entityClass={entityClass}
         updateServerAction={updateServerAction}
       />
-      <DtoControllerArray dtoList={masterList} entityClass={entityClass} />
+      <DtoControllerArray
+        dtoList={masterList}
+        entityClass={entityClass}
+        mergeInitialWithProp={mergeInitialWithProp}
+      />
     </>
   );
 }

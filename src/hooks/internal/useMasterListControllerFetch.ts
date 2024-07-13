@@ -2,29 +2,41 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { ArrayPlaceholder, useGlobalController } from "selective-context";
-import { DataFetchingProps, HasIdClass } from "../../types";
+import { DataFetchingProps, HasIdClass, Identifier } from "../../types";
 import { Controller, KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { isNotUndefined } from "../../functions/isNotUndefined";
 import { isNull, isNumber } from "lodash";
+import { getControllerListenerKey } from "./useMasterListControllerAddDelete";
 
-export function useMasterListFetchController<T extends HasIdClass<U>, U>({
-  entityClass,
-  idList,
-  getServerAction,
-}: DataFetchingProps<T, U>) {
+export function useMasterListFetchController<
+  T extends HasIdClass<U>,
+  U extends Identifier,
+>({ entityClass, idList, getServerAction }: DataFetchingProps<T, U>) {
+  const idListContext = getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST);
   const { currentState: stateIdList } = useGlobalController({
-    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST),
-    listenerKey: Controller,
+    contextKey: idListContext,
+    listenerKey: getControllerListenerKey(idListContext),
     initialValue: idList,
   });
 
+  const masterListContext = getNameSpacedKey(
+    entityClass,
+    KEY_TYPES.MASTER_LIST,
+  );
   const { currentState: masterList, dispatch: dispatchMasterList } =
     useGlobalController({
-      contextKey: getNameSpacedKey(entityClass, KEY_TYPES.MASTER_LIST),
-      listenerKey: Controller,
+      contextKey: masterListContext,
+      listenerKey: getControllerListenerKey(masterListContext),
       initialValue: ArrayPlaceholder as T[],
     });
+
+  const selectedContext = getNameSpacedKey(entityClass, KEY_TYPES.SELECTED);
+  useGlobalController({
+    contextKey: selectedContext,
+    listenerKey: getControllerListenerKey(selectedContext),
+    initialValue: ArrayPlaceholder as U[],
+  });
 
   const idListRef = useRef([] as U[]);
   const isLoading = useRef(false);

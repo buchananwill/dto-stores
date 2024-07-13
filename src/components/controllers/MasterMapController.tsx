@@ -8,6 +8,7 @@ import {
 } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { Controller, EmptyArray, InitialMap, KEY_TYPES } from "../../literals";
+import { getControllerListenerKey } from "../../hooks/internal/useMasterListControllerAddDelete";
 
 export interface DtoGroupMapControllerProps {
   entityClass: string;
@@ -19,8 +20,8 @@ export function MasterMapController({
   const listenerKey = `${entityClass}:mapController`;
   const { currentState: idList } = useGlobalListener<(number | string)[]>({
     contextKey: getNameSpacedKey(entityClass, KEY_TYPES.ID_LIST),
-    initialValue: EmptyArray,
     listenerKey: listenerKey,
+    initialValue: EmptyArray,
   });
 
   const contextKeys = useMemo(
@@ -34,9 +35,11 @@ export function MasterMapController({
     initialValue: InitialMap,
   });
 
+  const masterMapContext = getNameSpacedKey(entityClass, KEY_TYPES.MASTER_MAP);
+
   const { dispatch } = useGlobalController({
-    contextKey: getNameSpacedKey(entityClass, KEY_TYPES.MASTER_MAP),
-    listenerKey: Controller,
+    contextKey: masterMapContext,
+    listenerKey: getControllerListenerKey(masterMapContext),
     initialValue: entityMap,
   });
 

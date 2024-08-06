@@ -7,8 +7,9 @@ import {
   useGlobalListenerGroup,
 } from "selective-context";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { Controller, EmptyArray, InitialMap, KEY_TYPES } from "../../literals";
-import { getControllerListenerKey } from "../../hooks/internal/useMasterListControllerAddDelete";
+import { EmptyArray, InitialMap, KEY_TYPES } from "../../literals";
+
+import { getControllerListenerKey } from "../../hooks/internal/getControllerListenerKey";
 
 export interface DtoGroupMapControllerProps {
   entityClass: string;

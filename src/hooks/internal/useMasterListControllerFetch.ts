@@ -3,11 +3,12 @@
 import { useCallback, useEffect, useRef } from "react";
 import { ArrayPlaceholder, useGlobalController } from "selective-context";
 import { DataFetchingProps, HasIdClass, Identifier } from "../../types";
-import { Controller, KEY_TYPES } from "../../literals";
+import { KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { isNotUndefined } from "../../functions/isNotUndefined";
 import { isNull, isNumber } from "lodash";
-import { getControllerListenerKey } from "./useMasterListControllerAddDelete";
+
+import { getControllerListenerKey } from "./getControllerListenerKey";
 
 export function useMasterListFetchController<
   T extends HasIdClass<U>,

@@ -6,12 +6,13 @@ import {
 
 import { useEffect, useMemo, useRef } from "react";
 import { HasIdClass } from "../../types";
-import { Controller, KEY_TYPES } from "../../literals";
+import { KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
 import { useEffectSyncDeepEqualWithDispatch } from "../util";
+import { getControllerListenerKey } from "./getControllerListenerKey";
 
-export function getControllerListenerKey(masterListContext: string) {
-  return `${masterListContext}${Controller}`;
+function getMasterListControllerListenerKey(deletedContext: string) {
+  return `${deletedContext}:masterListController`;
 }
 
 /**
@@ -62,7 +63,7 @@ export function useMasterListControllerAddDelete<
     dispatchWithoutControl: dispatchDeletedList,
   } = useGlobalDispatchAndListener<U[]>({
     contextKey: deletedContext,
-    listenerKey: getControllerListenerKey(deletedContext),
+    listenerKey: getMasterListControllerListenerKey(deletedContext),
     initialValue: ArrayPlaceholder,
   });
 
@@ -73,7 +74,7 @@ export function useMasterListControllerAddDelete<
     currentState: transientIdList,
   } = useGlobalDispatchAndListener<U[]>({
     contextKey: addedContext,
-    listenerKey: getControllerListenerKey(addedContext),
+    listenerKey: getMasterListControllerListenerKey(addedContext),
     initialValue: ArrayPlaceholder,
   });
 

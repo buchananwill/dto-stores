@@ -3,7 +3,8 @@ import { Entity } from "../../types";
 
 import { getEntityNamespaceContextKey } from "../../functions/name-space-keys/getEntityNamespaceContextKey";
 import { useGlobalController } from "selective-context";
-import { getControllerListenerKey } from "./useMasterListControllerAddDelete";
+
+import { getControllerListenerKey } from "./getControllerListenerKey";
 
 export function useDtoStoreController<T extends Entity>(
   dto: T,

@@ -2,7 +2,8 @@ import { useGlobalController, useGlobalDispatch } from "selective-context";
 import { ChangesCallbackMap, ChangesTracker } from "../../types";
 import { EmptyArray, KEY_TYPES } from "../../literals";
 import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
-import { getControllerListenerKey } from "./useMasterListControllerAddDelete";
+
+import { getControllerListenerKey } from "./getControllerListenerKey";
 
 export function useChangesTrackerControllers<U extends string | number>(
   entityClass: string,

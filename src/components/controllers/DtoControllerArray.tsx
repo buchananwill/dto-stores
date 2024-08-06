@@ -11,7 +11,7 @@ export function DtoControllerArray<T extends Entity>({
   const safeDtoList = useMemo(() => {
     const idSet = new Set<number | string>();
     const safeDtoList = [];
-    for (let t of dtoList) {
+    for (const t of dtoList) {
       if (!idSet.has(t.id)) {
         safeDtoList.push(t);
         idSet.add(t.id);

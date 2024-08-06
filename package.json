@@ -1,6 +1,6 @@
 {
   "name": "dto-stores",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0",
   "description": "Utility components for reducing boilerplate when managing the lifecycle of database objects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,8 +15,7 @@
   "keywords": [],
   "author": "Will Buchanan",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "selective-context": "^2.0.2",
     "lodash": "^4.17.21",

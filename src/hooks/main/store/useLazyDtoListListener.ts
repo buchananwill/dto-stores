@@ -1,4 +1,5 @@
-import { useGlobalDispatch, useGlobalListenerGroup } from "selective-context";
+"use client";
+import { useGlobalListenerGroup } from "selective-context";
 import { Entity } from "../../../types";
 import { useEffect, useMemo, useRef } from "react";
 import { EmptyArray, InitialMap, KEY_TYPES } from "../../../literals";
@@ -10,8 +11,10 @@ export function useLazyDtoListListener<T extends Entity>(
   listenerKey?: string,
 ) {
   const listenerKeyRef = useRef(listenerKey ?? crypto.randomUUID());
-  NamespacedHooks.useDispatch(entityClass, KEY_TYPES.ID_LIST);
-  const { dispatchWithoutListen } = useGlobalDispatch(`${entityClass}:idList`);
+  const dispatchWithoutListen = NamespacedHooks.useDispatch(
+    entityClass,
+    KEY_TYPES.ID_LIST,
+  );
 
   const referencedIdContextKeys = useMemo(
     () => idList.map((id) => `${entityClass}:${id}`) ?? EmptyArray,

@@ -9,7 +9,7 @@ export function handleCommitDeletes<U>(
 ) {
   if (deleteServerAction === undefined) {
     console.error("No server delete action defined");
-  } else {
+  } else if (deletedDtos.length > 0) {
     deletedDtos.filter((id) => !transientDtoIdList.includes(id));
     deleteServerAction(deletedDtos).then(() => dispatchDeletionList([]));
   }

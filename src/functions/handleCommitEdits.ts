@@ -12,7 +12,7 @@ export function handleCommitEdits<T, U extends string | number>(
 ) {
   if (updateServerAction === undefined) {
     console.error("No server update action defined");
-  } else {
+  } else if (changedDtos.length > 0) {
     const set = new Set<string | number>();
     changedDtos.forEach((key) => set.add(key));
     const keyArray: (string | number)[] = [];

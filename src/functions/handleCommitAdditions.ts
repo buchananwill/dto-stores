@@ -14,13 +14,17 @@ export function handleCommitAdditions<T, U extends string | number>(
 ) {
   if (postServerAction === undefined) {
     console.error("No server post action defined");
-  } else {
+  } else if (transientDtoIdList.length > 0) {
     const transientDtoList = transientDtoIdList
       .filter((id) => !deletedDtos.includes(id))
       .map((id) =>
         selectiveContextReadAll(getEntityNamespaceContextKey(entityClass, id)),
       )
       .filter(isNotUndefined);
-    postServerAction(transientDtoList).then(() => dispatchTransientList([]));
+    if (transientDtoList.length > 0) {
+      postServerAction(transientDtoList).then(() => dispatchTransientList([]));
+    } else {
+      dispatchTransientList([]);
+    }
   }
 }

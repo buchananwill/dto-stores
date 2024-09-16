@@ -76,7 +76,7 @@ export type CommitChangesCallbackParams<
 > = TrackChangesProps<T, U> &
   ChangesTracker<U> & {
     selectiveContextReadAll: SelectiveContextReadAll<T>;
-    dispatchMasterList: DispatchList<HasIdClass<U>>;
+    dispatchMasterList: DispatchList<T>;
     dispatchIdList: DispatchList<U>;
   };
 

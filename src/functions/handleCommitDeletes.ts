@@ -6,12 +6,15 @@ import {
 } from "../types";
 import { Dispatch, SetStateAction } from "react";
 
-export function handleCommitDeletes<U extends Identifier>(
+export function handleCommitDeletes<
+  T extends HasIdClass<U>,
+  U extends Identifier,
+>(
   deleteServerAction: undefined | CommitServerAction<U>,
   deletedDtos: U[],
   transientDtoIdList: U[],
   dispatchDeletionList: Dispatch<SetStateAction<U[]>>,
-  dispatchMasterList: DispatchList<HasIdClass<U>>,
+  dispatchMasterList: DispatchList<T>,
   dispatchIdList: DispatchList<U>,
 ) {
   if (deleteServerAction === undefined) {

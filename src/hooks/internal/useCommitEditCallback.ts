@@ -1,6 +1,7 @@
 import { CommitEditCallbackParams, HasIdClass } from "../../types";
 import { useCallback } from "react";
 import { handleCommitEdits } from "../../functions/handleCommitEdits";
+import { EmptyArray } from "../../literals";
 
 export function useCommitEditCallback<
   T extends HasIdClass<U>,
@@ -15,6 +16,7 @@ export function useCommitEditCallback<
   return useCallback(async () => {
     handleCommitEdits(
       changedDtos,
+      EmptyArray,
       selectiveContextReadAll,
       entityClass,
       dispatchChangesList,

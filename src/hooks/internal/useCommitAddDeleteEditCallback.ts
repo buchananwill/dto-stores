@@ -19,6 +19,8 @@ export function useCommitAddDeleteEditCallback<
   updateServerAction,
   postServerAction,
   deleteServerAction,
+  dispatchIdList,
+  dispatchMasterList,
 }: CommitChangesCallbackParams<T, U>) {
   return useCallback(async () => {
     handleCommitEdits(
@@ -33,6 +35,8 @@ export function useCommitAddDeleteEditCallback<
       deletedDtos,
       transientDtoIdList,
       dispatchDeletionList,
+      dispatchMasterList,
+      dispatchIdList,
     );
 
     handleCommitAdditions(

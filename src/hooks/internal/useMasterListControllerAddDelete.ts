@@ -105,7 +105,8 @@ export function useMasterListControllerAddDelete<
   ]);
   return {
     masterList,
-    dispatch: dispatchMasterList,
+    dispatchMasterList,
+    dispatchIdList: dispatch,
     dispatchWithoutControl: dispatchTransientIdList,
   };
 }

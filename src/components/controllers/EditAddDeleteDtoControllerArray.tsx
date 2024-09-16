@@ -19,12 +19,15 @@ export function EditAddDeleteDtoControllerArray<
   mergeInitialWithProp,
   ...trackChangesProps
 }: PrimaryDtoControllerArrayProps<T, U>) {
-  const { masterList } = useMasterListControllerAddDelete(dtoList, entityClass);
+  const { masterList, dispatchIdList, dispatchMasterList } =
+    useMasterListControllerAddDelete<T, U>(dtoList, entityClass);
   return (
     <>
       <EditAddDeleteController
         entityClass={entityClass}
         {...trackChangesProps}
+        dispatchIdList={dispatchIdList}
+        dispatchMasterList={dispatchMasterList}
       />
       <DtoControllerArray
         entityClass={entityClass}

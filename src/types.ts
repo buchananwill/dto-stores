@@ -51,6 +51,8 @@ export interface TrackChangesProps<
   U extends Identifier,
 > {
   entityClass: string;
+  dispatchMasterList: DispatchList<T>;
+  dispatchIdList: DispatchList<U>;
   updateServerAction?: CommitServerAction<T>;
   deleteServerAction?: CommitServerAction<U>;
   postServerAction?: CommitServerAction<T>;
@@ -74,6 +76,8 @@ export type CommitChangesCallbackParams<
 > = TrackChangesProps<T, U> &
   ChangesTracker<U> & {
     selectiveContextReadAll: SelectiveContextReadAll<T>;
+    dispatchMasterList: DispatchList<HasIdClass<U>>;
+    dispatchIdList: DispatchList<U>;
   };
 
 export type CommitEditCallbackParams<
@@ -100,7 +104,8 @@ export type CommitServerAction<T> = (commitList: T[]) => Promise<unknown>;
 export type PrimaryDtoControllerArrayProps<
   T extends HasIdClass<U>,
   U extends Identifier,
-> = TrackChangesProps<T, U> & DtoControllerArrayProps<T>;
+> = Omit<TrackChangesProps<T, U>, "dispatchMasterList" | "dispatchIdList"> &
+  DtoControllerArrayProps<T>;
 
 export type EditControllerProps<
   T extends HasIdClass<U>,

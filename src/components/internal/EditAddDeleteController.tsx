@@ -9,7 +9,12 @@ import { useHasChangesFlagCallback } from "../../hooks/internal/useHasChangesFla
 export function EditAddDeleteController<
   T extends HasIdClass<U>,
   U extends Identifier,
->({ entityClass, ...serverActions }: TrackChangesProps<T, U>) {
+>({
+  entityClass,
+  dispatchMasterList,
+  dispatchIdList,
+  ...serverActions
+}: TrackChangesProps<T, U>) {
   const changesTrackers = useChangesTrackerControllers<U>(entityClass);
   const { dispatchUnsavedFlag, changedDtos, deletedDtos, transientDtoIdList } =
     changesTrackers;
@@ -20,6 +25,8 @@ export function EditAddDeleteController<
     ...changesTrackers,
     selectiveContextReadAll,
     entityClass,
+    dispatchIdList,
+    dispatchMasterList,
     ...serverActions,
   });
 

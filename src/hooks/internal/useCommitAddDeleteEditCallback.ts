@@ -25,6 +25,7 @@ export function useCommitAddDeleteEditCallback<
   return useCallback(async () => {
     handleCommitEdits(
       changedDtos,
+      transientDtoIdList,
       selectiveContextReadAll,
       entityClass,
       dispatchChangesList,

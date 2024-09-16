@@ -5,6 +5,7 @@ import { isNotUndefined } from "./isNotUndefined";
 
 export function handleCommitEdits<T, U extends string | number>(
   changedDtos: U[],
+  transientDtoIdList: U[],
   selectiveContextReadAll: (contextKey: string) => undefined | T,
   entityClass: string,
   dispatchChangesList: Dispatch<SetStateAction<U[]>>,
@@ -14,7 +15,10 @@ export function handleCommitEdits<T, U extends string | number>(
     console.error("No server update action defined");
   } else if (changedDtos.length > 0) {
     const set = new Set<string | number>();
-    changedDtos.forEach((key) => set.add(key));
+    const transientIds = new Set(transientDtoIdList);
+    changedDtos
+      .filter((id) => !transientIds.has(id))
+      .forEach((key) => set.add(key));
     const keyArray: (string | number)[] = [];
     set.forEach((element) => keyArray.push(element));
     const updatedEntities = keyArray

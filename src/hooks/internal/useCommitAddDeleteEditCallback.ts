@@ -47,6 +47,7 @@ export function useCommitAddDeleteEditCallback<
       selectiveContextReadAll,
       entityClass,
       dispatchTransientList,
+      dispatchMasterList,
     );
   }, [
     updateServerAction,

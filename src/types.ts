@@ -53,9 +53,9 @@ export interface TrackChangesProps<
   entityClass: string;
   dispatchMasterList: DispatchList<T>;
   dispatchIdList: DispatchList<U>;
-  updateServerAction?: CommitServerAction<T>;
-  deleteServerAction?: CommitServerAction<U>;
-  postServerAction?: CommitServerAction<T>;
+  updateServerAction?: CommitServerAction<T, T[]>;
+  deleteServerAction?: CommitServerAction<U, U[]>;
+  postServerAction?: CommitServerAction<T, T[]>;
 }
 
 export interface ChangesTracker<U extends Identifier> {
@@ -99,7 +99,9 @@ export type ChangesCallbackMap = Map<
   MutableRefObject<() => Promise<void>>
 >;
 
-export type CommitServerAction<T> = (commitList: T[]) => Promise<unknown>;
+export type CommitServerAction<T, Response> = (
+  commitList: T[],
+) => Promise<Response>;
 
 export type PrimaryDtoControllerArrayProps<
   T extends HasIdClass<U>,
@@ -195,3 +197,5 @@ export type DtoUiWrapperListSomeProps<
   T extends Entity,
   Props,
 > = DtoUiArrayProps<T, Props> & { entityIdList: Identifier[] };
+
+export type DispatchState<T> = Dispatch<SetStateAction<T>>;

@@ -26,6 +26,10 @@ export function handleCommitEdits<T, U extends string | number>(
         selectiveContextReadAll(getEntityNamespaceContextKey(entityClass, id)),
       )
       .filter(isNotUndefined);
-    updateServerAction(updatedEntities).then(() => dispatchChangesList([]));
+    if (updatedEntities.length > 0) {
+      updateServerAction(updatedEntities).then(() => dispatchChangesList([]));
+    } else {
+      dispatchChangesList([]);
+    }
   }
 }

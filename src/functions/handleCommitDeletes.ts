@@ -10,7 +10,7 @@ export function handleCommitDeletes<
   T extends HasIdClass<U>,
   U extends Identifier,
 >(
-  deleteServerAction: undefined | CommitServerAction<U>,
+  deleteServerAction: undefined | CommitServerAction<U, U[]>,
   deletedDtos: U[],
   transientDtoIdList: U[],
   dispatchDeletionList: Dispatch<SetStateAction<U[]>>,

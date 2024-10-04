@@ -9,7 +9,7 @@ export function handleCommitEdits<T, U extends string | number>(
   selectiveContextReadAll: (contextKey: string) => undefined | T,
   entityClass: string,
   dispatchChangesList: Dispatch<SetStateAction<U[]>>,
-  updateServerAction?: CommitServerAction<T>,
+  updateServerAction?: CommitServerAction<T, T[]>,
 ) {
   if (updateServerAction === undefined) {
     console.error("No server update action defined");

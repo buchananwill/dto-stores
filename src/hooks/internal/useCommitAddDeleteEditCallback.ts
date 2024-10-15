@@ -29,6 +29,7 @@ export function useCommitAddDeleteEditCallback<
   const { dispatchWithoutListen } = useGlobalDispatch<number>(
     getNameSpacedKey(entityClass, KEY_TYPES.COMMIT_VERSION),
   );
+
   return useCallback(async () => {
     handleCommitEdits(
       changedDtos,

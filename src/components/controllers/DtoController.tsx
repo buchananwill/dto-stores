@@ -18,6 +18,10 @@ export function DtoController<T extends Entity>({
   const { currentState } = useDtoStoreController(dto, entityClass);
   const initialDtoRef = useRef<T>(dto);
 
+  if (dto === currentState) {
+    initialDtoRef.current = dto;
+  }
+
   const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
     getNameSpacedKey(entityClass, KEY_TYPES.CHANGES),
   );

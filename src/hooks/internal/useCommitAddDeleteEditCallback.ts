@@ -24,6 +24,7 @@ export function useCommitAddDeleteEditCallback<
   deleteServerAction,
   dispatchIdList,
   dispatchMasterList,
+  dispatchUnsavedFlag,
 }: CommitChangesCallbackParams<T, U>) {
   const { dispatchWithoutListen } = useGlobalDispatch<number>(
     getNameSpacedKey(entityClass, KEY_TYPES.COMMIT_VERSION),
@@ -56,6 +57,11 @@ export function useCommitAddDeleteEditCallback<
       dispatchMasterList,
     );
     dispatchWithoutListen((prev) => prev++);
+    dispatchUnsavedFlag((preMap) => {
+      const nextMap = new Map(preMap);
+      nextMap.delete(entityClass);
+      return nextMap;
+    });
   }, [
     updateServerAction,
     transientDtoIdList,

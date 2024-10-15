@@ -79,6 +79,9 @@ export type CommitChangesCallbackParams<
     selectiveContextReadAll: SelectiveContextReadAll<T>;
     dispatchMasterList: DispatchList<T>;
     dispatchIdList: DispatchList<U>;
+    dispatchUnsavedFlag: Dispatch<
+      SetStateAction<Map<string, MutableRefObject<() => Promise<void>>>>
+    >;
   };
 
 export type CommitEditCallbackParams<

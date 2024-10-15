@@ -13,6 +13,7 @@ export function DtoController<T extends Entity>({
   dto,
   entityClass,
   mergeInitialWithProp,
+  commitVersion,
 }: DtoControllerProps<T>) {
   const { currentState } = useDtoStoreController(dto, entityClass);
   const initialDtoRef = useRef<T>(dto);
@@ -20,6 +21,12 @@ export function DtoController<T extends Entity>({
   const { dispatchWithoutListen } = useGlobalDispatch<(string | number)[]>(
     getNameSpacedKey(entityClass, KEY_TYPES.CHANGES),
   );
+
+  useEffect(() => {
+    if (commitVersion) {
+      initialDtoRef.current = currentState;
+    }
+  }, [commitVersion]);
 
   useEffect(() => {
     if (mergeInitialWithProp) {

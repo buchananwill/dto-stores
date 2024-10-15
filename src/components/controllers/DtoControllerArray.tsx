@@ -7,6 +7,7 @@ export function DtoControllerArray<T extends Entity>({
   dtoList,
   entityClass,
   mergeInitialWithProp,
+  commitVersion,
 }: DtoControllerArrayProps<T>) {
   const safeDtoList = useMemo(() => {
     const idSet = new Set<number | string>();
@@ -26,6 +27,7 @@ export function DtoControllerArray<T extends Entity>({
           key={getEntityNamespaceKeyWithDto(entityClass, dto)}
           dto={dto}
           entityClass={entityClass}
+          commitVersion={commitVersion}
           mergeInitialWithProp={mergeInitialWithProp}
         />
       ))}

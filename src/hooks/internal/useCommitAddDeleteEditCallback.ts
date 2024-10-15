@@ -3,6 +3,9 @@ import { useCallback } from "react";
 import { handleCommitEdits } from "../../functions/handleCommitEdits";
 import { handleCommitDeletes } from "../../functions/handleCommitDeletes";
 import { handleCommitAdditions } from "../../functions/handleCommitAdditions";
+import { useGlobalDispatch } from "selective-context";
+import { getNameSpacedKey } from "../../functions/name-space-keys/getNameSpacedKey";
+import { KEY_TYPES } from "../../literals";
 
 export function useCommitAddDeleteEditCallback<
   T extends HasIdClass<U>,
@@ -22,6 +25,9 @@ export function useCommitAddDeleteEditCallback<
   dispatchIdList,
   dispatchMasterList,
 }: CommitChangesCallbackParams<T, U>) {
+  const { dispatchWithoutListen } = useGlobalDispatch<number>(
+    getNameSpacedKey(entityClass, KEY_TYPES.COMMIT_VERSION),
+  );
   return useCallback(async () => {
     handleCommitEdits(
       changedDtos,
@@ -49,6 +55,7 @@ export function useCommitAddDeleteEditCallback<
       dispatchTransientList,
       dispatchMasterList,
     );
+    dispatchWithoutListen((prev) => prev++);
   }, [
     updateServerAction,
     transientDtoIdList,

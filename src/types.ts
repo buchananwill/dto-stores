@@ -29,6 +29,7 @@ export interface DtoControllerProps<T extends Entity> {
   dto: T;
   entityClass: string;
   mergeInitialWithProp?: boolean;
+  commitVersion?: number;
 }
 
 export type DtoControllerArrayProps<T extends Entity> = Omit<

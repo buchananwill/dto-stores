@@ -8,6 +8,7 @@ export const KEY_TYPES = {
   MASTER_LIST: "masterList",
   MASTER_MAP: "masterMap",
   SELECTED: "selectedList",
+  COMMIT_VERSION: "commitVersion",
 } as const;
 export const EmptyArray = [];
 export const ObjectPlaceholder = {};
